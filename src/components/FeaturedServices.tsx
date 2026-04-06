@@ -1,32 +1,52 @@
 "use client";
 
-import { Star, ArrowRight, Shield, Clock, Award, Users, CheckCircle } from "lucide-react";
-import Image from "next/image";
+import { useState, useEffect, useCallback } from "react";
+import { ArrowRight, Shield, Clock, Award, Users, CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
 
 const services = [
   {
-    image: "/ac-service-1.jpg",
+    images: [
+      "/ac-service-1.jpg",
+      "/ac-service-2.jpg",
+      "/ac-service-3.jpg",
+      // Replace with your own photos for AC Repair
+    ],
     title: "AC Repair & Fix",
     subtitle: "All brands & models",
     features: ["Error diagnosis", "Compressor repair", "PCB fixing", "Sensor replacement"],
     badge: null,
   },
   {
-    image: "/ac-service-3.jpg",
+    images: [
+      "/ac-service-3.jpg",
+      "/ac-service-4.jpg",
+      "/technician-1.jpg",
+      // Replace with your own photos for AC Installation
+    ],
     title: "AC Installation",
     subtitle: "Split, Window & Cassette",
     features: ["Professional setup", "Copper piping", "Drainage system", "Wall mounting"],
     badge: "Best Seller",
   },
   {
-    image: "/ac-service-2.jpg",
+    images: [
+      "/ac-service-2.jpg",
+      "/ac-service-1.jpg",
+      "/ac-service-4.jpg",
+      // Replace with your own photos for Gas Refill
+    ],
     title: "Gas Refill & Leak Fix",
     subtitle: "R32, R410A, R22",
     features: ["Leak detection", "Pressure testing", "Exact gas filling", "Warranty included"],
     badge: null,
   },
   {
-    image: "/ac-service-4.jpg",
+    images: [
+      "/ac-service-4.jpg",
+      "/ac-service-3.jpg",
+      "/ac-service-1.jpg",
+      // Replace with your own photos for Deep Cleaning
+    ],
     title: "Deep Cleaning & Service",
     subtitle: "Complete AC maintenance",
     features: ["Filter cleaning", "Coil washing", "Drain cleaning", "Performance check"],
@@ -34,6 +54,98 @@ const services = [
   },
 ];
 
+/* ────────────── Individual Tile Image Carousel ────────────── */
+function ServiceImageCarousel({
+  images,
+  title,
+}: {
+  images: string[];
+  title: string;
+}) {
+  const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const next = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  const prev = () => {
+    setCurrent((c) => (c - 1 + images.length) % images.length);
+  };
+
+  // Auto-rotate every 3 seconds, pause on hover
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(next, 3000);
+    return () => clearInterval(timer);
+  }, [isPaused, next]);
+
+  return (
+    <div
+      className="relative aspect-[4/3] overflow-hidden bg-slate-100"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* Image Stack with crossfade */}
+      {images.map((img, idx) => (
+        <img
+          key={idx}
+          src={img}
+          alt={`${title} - photo ${idx + 1}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${
+            idx === current
+              ? "opacity-100 scale-100"
+              : "opacity-0 scale-105"
+          }`}
+        />
+      ))}
+
+      {/* Left / Right Arrows (show on hover) */}
+      <button
+        onClick={prev}
+        className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-opacity opacity-0 group-hover:opacity-100 z-10"
+        style={{ opacity: isPaused ? 1 : 0 }}
+        aria-label="Previous photo"
+      >
+        <ChevronLeft className="w-4 h-4" />
+      </button>
+      <button
+        onClick={next}
+        className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-opacity opacity-0 group-hover:opacity-100 z-10"
+        style={{ opacity: isPaused ? 1 : 0 }}
+        aria-label="Next photo"
+      >
+        <ChevronRight className="w-4 h-4" />
+      </button>
+
+      {/* Dot Indicators */}
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+        {images.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrent(idx)}
+            className={`rounded-full transition-all duration-300 ${
+              idx === current
+                ? "w-5 h-2 bg-white"
+                : "w-2 h-2 bg-white/60 hover:bg-white/90"
+            }`}
+            aria-label={`Go to photo ${idx + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Bottom gradient + title overlay */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/50 via-black/20 to-transparent pointer-events-none z-[5]" />
+      <div className="absolute bottom-3 left-3 right-3 z-[5] pointer-events-none">
+        <h3 className="text-white font-bold text-base drop-shadow-md">
+          {title}
+        </h3>
+      </div>
+    </div>
+  );
+}
+
+/* ────────────── Main Component ────────────── */
 export default function FeaturedServices() {
   return (
     <section className="py-16 md:py-24 bg-white">
@@ -64,31 +176,24 @@ export default function FeaturedServices() {
               key={index}
               className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden"
             >
-              {/* Image */}
-              <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                {service.badge && (
-                  <div className="absolute top-3 left-3">
-                    <span className="bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                      {service.badge}
-                    </span>
-                  </div>
-                )}
-                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/40 to-transparent" />
-                <div className="absolute bottom-3 left-3 right-3">
-                  <h3 className="text-white font-bold text-base drop-shadow-sm">
-                    {service.title}
-                  </h3>
-                  <p className="text-white/80 text-xs">{service.subtitle}</p>
+              {/* Auto-rotating Image Carousel */}
+              <ServiceImageCarousel
+                images={service.images}
+                title={service.title}
+              />
+
+              {/* Badge */}
+              {service.badge && (
+                <div className="relative -mt-1 z-10 ml-3">
+                  <span className="bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-full -translate-y-1/2 inline-block shadow">
+                    {service.badge}
+                  </span>
                 </div>
-              </div>
+              )}
 
               {/* Content */}
               <div className="p-4">
+                <p className="text-xs text-slate-500 font-medium mb-2">{service.subtitle}</p>
                 <div className="space-y-1.5 mb-4">
                   {service.features.map((f, i) => (
                     <div key={i} className="flex items-center gap-2 text-xs text-slate-600">
