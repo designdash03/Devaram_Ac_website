@@ -199,10 +199,3 @@ Use 'kill 653' to stop it.
  GET / 200 in 69ms (compile: 40ms, render: 29ms)
 ✓ Compiled in 159ms
  GET / 200 in 194ms (compile: 3ms, render: 191ms)
- GET / 200 in 100ms (compile: 3ms, render: 97ms)
-⚠ Cross origin request detected from preview-chat-f77e9804-264e-4116-925a-b7cd89ed025a.space.z.ai to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
-Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
- GET / 200 in 85ms (compile: 3ms, render: 83ms)
- GET / 200 in 77ms (compile: 2ms, render: 74ms)
- GET / 200 in 90ms (compile: 2ms, render: 88ms)
- GET / 200 in 73ms (compile: 2ms, render: 71ms)

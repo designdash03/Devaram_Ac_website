@@ -22,7 +22,6 @@ const services = [
     title: "AC Repair & Troubleshooting",
     description:
       "Comprehensive AC repair services for all types of air conditioners. Whether your AC is not cooling, making unusual noises, leaking water, or showing error codes, our expert technicians can quickly diagnose and fix the problem. We handle everything from minor sensor replacements to major compressor repairs.",
-    price: "From ₹500",
     features: [
       "All brands & models",
       "Error code diagnostics",
@@ -39,7 +38,6 @@ const services = [
     title: "AC Installation",
     description:
       "Professional AC installation services for split ACs, window ACs, and cassette units. Our certified technicians ensure perfect installation with proper piping, insulation, and drainage setup. We also provide guidance on choosing the right AC capacity for your room size and usage requirements.",
-    price: "From ₹1,500",
     features: [
       "Split & window AC",
       "Indoor & outdoor setup",
@@ -56,7 +54,6 @@ const services = [
     title: "Gas Refill & Leak Fix",
     description:
       "Complete gas refill and refrigerant leak detection services. Low gas levels can reduce cooling efficiency and increase electricity bills. We use advanced leak detection tools to find and fix leaks, then refill with the correct type and amount of refrigerant specified by the manufacturer.",
-    price: "From ₹1,200",
     features: [
       "R32, R410A, R22 gas",
       "Leak detection & fix",
@@ -73,7 +70,6 @@ const services = [
     title: "Regular Maintenance",
     description:
       "Keep your AC running at peak efficiency with our regular maintenance service. Includes thorough cleaning of filters, coils, and drainage system. Regular maintenance extends AC lifespan by up to 40% and reduces electricity consumption significantly.",
-    price: "From ₹400",
     features: [
       "Filter cleaning",
       "Coil washing",
@@ -90,7 +86,6 @@ const services = [
     title: "AMC Plans",
     description:
       "Annual Maintenance Contract plans that give you peace of mind throughout the year. Choose from our Basic, Standard, or Premium plans. All plans include scheduled servicing, priority support, discounted repairs, and extended warranty coverage for your AC system.",
-    price: "From ₹1,999/yr",
     features: [
       "2-4 services per year",
       "Priority booking",
@@ -107,7 +102,6 @@ const services = [
     title: "Emergency AC Service",
     description:
       "AC broke down at midnight or on a holiday? Do not sweat! Our emergency AC repair service is available 24/7, 365 days a year. Our rapid response team will reach your location within 60 minutes to get your AC up and running again as quickly as possible.",
-    price: "From ₹800",
     features: [
       "24/7 availability",
       "60-min response time",
@@ -158,7 +152,7 @@ export default function Services() {
           <p className="text-lg text-muted-foreground leading-relaxed">
             From quick repairs to full installations, we offer a comprehensive
             range of AC services tailored to your needs. Every service comes with
-            our quality guarantee and transparent pricing.
+            our quality guarantee and honest transparent approach.
           </p>
         </div>
 
@@ -201,10 +195,7 @@ export default function Services() {
                     </div>
                   ))}
                 </div>
-                <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                  <span className="text-lg font-bold text-foreground">
-                    {service.price}
-                  </span>
+                <div className="pt-4 border-t border-slate-100">
                   <a
                     href="tel:+919876543210"
                     className="inline-flex items-center gap-1 text-sm font-semibold text-sky-600 hover:text-sky-700 transition-colors group/link"
