@@ -1,32 +1,31 @@
 ---
-Task ID: 2
+Task ID: 3
 Agent: Main Agent
-Task: Enhance AC Mechanic website - remove pricing, add customer review system, add new sections
+Task: Redesign website inspired by Urban Company + enhance customer review system
 
 Work Log:
-- Removed pricing details from all 6 service cards in Services.tsx
-- Updated Prisma schema with Review model (name, location, rating, text, createdAt)
-- Ran prisma db push to sync database
-- Created /api/reviews API route with GET (fetch all reviews) and POST (submit new review)
-- Completely rebuilt Testimonials.tsx with:
-  - Dynamic review fetching from database
-  - "Write a Review" button opening a modal form
-  - Interactive star rating (hover + click, large stars)
-  - Name, location, review text fields
-  - Form validation and submission with loading state
-  - Success animation after submission
-  - Dynamic stats computed from actual reviews (avg rating, satisfaction rate)
-  - Relative date formatting (Today, Yesterday, X days ago, etc.)
-- Created StatsCounter.tsx with animated count-up numbers (IntersectionObserver + requestAnimationFrame)
-- Created HowItWorks.tsx with 4-step process flow (Book, Diagnose, Repair, Quality Check)
-- Created FAQ.tsx with 8 detailed FAQs using shadcn Accordion component
-- Created OfferBanner.tsx - animated top promotional banner (20% off summer special)
-- Updated page.tsx to include all new sections in proper order
-- ESLint check passed with no errors
+- Fetched Urban Company website for design inspiration
+- Generated 5 professional photos (technician, AC repair, gas refill, installation, cleaning)
+- Created CategoryBar.tsx - horizontal scrollable service categories (like UC's category grid)
+- Created FeaturedServices.tsx - image-based service cards with photos, badges, feature lists (like UC's popular services)
+- Completely rebuilt Testimonials.tsx with Urban Company-style layout:
+  - Left sidebar: Rating summary with 5-star distribution bars
+  - Left sidebar: Inline review form (star rating, name, location, review text)
+  - Right side: Sortable review cards (Recent, Highest, Lowest)
+  - "View All Reviews" expandable button
+  - Dynamic stats computed from database
+- Created WhyUs.tsx - comparison table (CoolAir Pro vs Local Mechanic) with 8 feature rows
+- Created DownloadBanner.tsx - dark CTA section with Call + WhatsApp buttons (like UC's download section)
+- Updated page.tsx with all 12 sections in Urban Company-inspired flow
+- ESLint passed with zero errors
+- Dev server running and all APIs working
 
 Stage Summary:
-- Pricing removed from all service cards
-- Customer review system fully functional (database + API + UI)
-- 4 new sections added: How It Works, Stats Counter, FAQ, Offer Banner
-- Website now has 9 sections total with much richer content
-- All features tested and working
+- Website redesigned with Urban Company-inspired layout
+- Same sky/cyan color theme preserved (no UI theme changes)
+- 5 new components added: CategoryBar, FeaturedServices, WhyUs, DownloadBanner, enhanced Testimonials
+- Customer review system is inline in the reviews section (not a modal anymore)
+- Star rating distribution bars added
+- Sort functionality for reviews (Recent, Highest, Lowest)
+- Generated 5 professional service images
+- Total 12 sections in the website now
