@@ -65,6 +65,34 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+    const phone = (form.elements.namedItem("phone") as HTMLInputElement).value;
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+    const service = (form.elements.namedItem("service") as HTMLSelectElement).value;
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+
+    const serviceLabels: Record<string, string> = {
+      repair: "AC Repair",
+      installation: "AC Installation",
+      "gas-refill": "Gas Refill",
+      maintenance: "Regular Maintenance",
+      amc: "AMC Plan",
+      emergency: "Emergency Service",
+      other: "Other",
+    };
+
+    const serviceLabel = serviceLabels[service] || service;
+    const whatsappMessage = `🔵 *New AC Service Inquiry*\n\n👤 *Name:* ${name}\n📞 *Phone:* ${phone}${email ? `\n📧 *Email:* ${email}` : ""}\n🔧 *Service:* ${serviceLabel}${message ? `\n💬 *Message:* ${message}` : ""}`;
+
+    const whatsappUrl = `https://wa.me/917200979643?text=${encodeURIComponent(whatsappMessage)}`;
+    const subject = encodeURIComponent(`New AC Service Inquiry - ${serviceLabel} from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nPhone: ${phone}\n${email ? `Email: ${email}\n` : ""}Service: ${serviceLabel}\n${message ? `Message: ${message}` : ""}`);
+    const mailtoUrl = `mailto:devaramramasamy93@gmail.com?subject=${subject}&body=${body}`;
+
+    window.open(whatsappUrl, "_blank");
+    window.location.href = mailtoUrl;
+
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
   };
@@ -244,7 +272,7 @@ export default function Contact() {
             <Card className="border-0 shadow-lg overflow-hidden flex-1">
               <CardContent className="p-0 h-full min-h-[300px] md:min-h-[400px]">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.3087548020456!2d80.2680!3d13.0827!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDA0JzU3LjciTiA4MMKwMTYnMDQuOCJF!5e0!3m2!1sen!2sin!4v1234567890"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.5!2d76.96!3d11.03!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba85f0b1e4a5c7b%3A0x1e4a5c7b!2s70C%2C%20NVM%20Castle%2C%20Sanganoor%20Rd%2C%20near%20Elsie%20School%2C%20opposite%20Roots%2C%20Rathinapuri%2C%20Coimbatore%2C%20Tamil%20Nadu%20641006!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0, minHeight: "400px" }}
@@ -267,12 +295,16 @@ export default function Contact() {
                     Our Location
                   </h4>
                   <p className="text-sm text-foreground/70 leading-relaxed">
-                    Coimbatore,
+                    70C, NVM Castle, Sanganoor Rd,
                     <br />
-                    Tamil Nadu, India
+                    Near Elsie School, Opposite Roots,
+                    <br />
+                    Rathinapuri, Coimbatore,
+                    <br />
+                    Tamil Nadu 641006
                   </p>
                   <a
-                    href="https://maps.google.com/?q=Coimbatore"
+                    href="https://maps.google.com/?q=70c+nvm+castle+sanganoor+rd+rathinapuri+coimbatore+641006"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs font-semibold text-sky-600 hover:text-sky-700 mt-2 transition-colors"

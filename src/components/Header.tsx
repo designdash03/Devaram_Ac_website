@@ -7,9 +7,9 @@ import { Menu, Snowflake, Phone } from "lucide-react";
 
 const navLinks = [
   { href: "#home", label: "Home" },
-  { href: "#about", label: "About" },
   { href: "#services", label: "Services" },
-  { href: "#reviews", label: "Reviews" },
+  { href: "#about", label: "About" },
+  { href: "#reviews", label: "Review" },
   { href: "#contact", label: "Contact" },
 ];
 

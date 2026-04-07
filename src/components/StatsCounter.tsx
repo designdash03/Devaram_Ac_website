@@ -68,7 +68,7 @@ function CounterCard({
 
 export default function StatsCounter() {
   return (
-    <section className="py-20 bg-gradient-to-br from-sky-600 via-sky-500 to-cyan-500 relative overflow-hidden">
+    <section id="about" className="py-20 bg-gradient-to-br from-sky-600 via-sky-500 to-cyan-500 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-72 h-72 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2" />

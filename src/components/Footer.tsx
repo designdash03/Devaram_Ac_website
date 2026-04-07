@@ -65,7 +65,7 @@ export default function Footer() {
               </a>
               <div className="flex items-center gap-2 text-sm text-slate-300">
                 <MapPin className="w-4 h-4" />
-                Coimbatore, Tamil Nadu
+                70C, NVM Castle, Sanganoor Rd, Rathinapuri, Coimbatore 641006
               </div>
             </div>
           </div>
