@@ -74,3 +74,22 @@ Stage Summary:
 - Deep Cleaning: 3 videos (ac-clean-1/2/3.mp4)
 - Total size reduced by removing audio tracks
 - No copyright music will play
+
+---
+Task ID: 1
+Agent: Main
+Task: Apply Hero section changes + Create downloadable zip
+
+Work Log:
+- Read Hero.tsx and found current values: "5+" years, "1000+" clients, "Trusted by 1,000+ Customers", "4.8★ Rating"
+- Changed trust badge text from "Trusted by 1,000+ Customers" to "1000+ customers with five stars"
+- Changed years stat from "5+" to "5+ yrs" with label "Years of Exp."
+- Confirmed "Certified Technician" does not exist in codebase (already removed)
+- Created code-only zip (115KB) at /home/z/my-project/download/deva-ac-website-code.zip
+- Includes setup-media.sh helper script for adding video/image files
+- Full media zip is 44MB (too large for chat download)
+
+Stage Summary:
+- Hero section updated as requested
+- Code zip (115KB) created with all components including latest changes
+- User needs to manually add 12 media files (10 videos + 2 images) to public/videos/ and public/
