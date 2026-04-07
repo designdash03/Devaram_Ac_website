@@ -15,9 +15,9 @@ import { Card, CardContent } from "@/components/ui/card";
 const trustFactors = [
   {
     icon: <Award className="w-8 h-8" />,
-    title: "15+ Years Experience",
+    title: "5+ Years Experience",
     description:
-      "We have been serving the community with top-notch AC repair and installation services since 2009. Our extensive experience means we have seen and solved every possible AC issue, from simple filter cleaning to complex compressor replacements.",
+      "We have been serving the community with top-notch AC repair and installation services since 2021. Our growing experience means we have solved every possible AC issue, from simple filter cleaning to complex compressor replacements.",
     color: "from-sky-500 to-cyan-500",
     bgColor: "bg-sky-50",
     textColor: "text-sky-600",
@@ -42,9 +42,9 @@ const trustFactors = [
   },
   {
     icon: <Users className="w-8 h-8" />,
-    title: "5,000+ Happy Customers",
+    title: "1,000+ Happy Customers",
     description:
-      "With over 5,000 satisfied customers across the city, we have built a reputation for reliability and quality service. Our customer retention rate is over 85%, which speaks volumes about our commitment to excellence.",
+      "With over 1,000 satisfied customers across Coimbatore, we have built a reputation for reliability and quality service. Our customer retention rate is over 85%, which speaks volumes about our commitment to excellence.",
     color: "from-violet-500 to-purple-500",
     bgColor: "bg-violet-50",
     textColor: "text-violet-600",

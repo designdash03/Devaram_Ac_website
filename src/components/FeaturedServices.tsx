@@ -203,7 +203,7 @@ export default function FeaturedServices() {
                   ))}
                 </div>
                 <a
-                  href="tel:+919876543210"
+                  href="tel:+917200979643"
                   className="flex items-center justify-center gap-1 w-full bg-sky-50 hover:bg-sky-100 text-sky-700 text-sm font-semibold py-2.5 rounded-xl transition-colors"
                 >
                   Book Now

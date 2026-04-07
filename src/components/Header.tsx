@@ -66,7 +66,7 @@ export default function Header() {
           {/* CTA + Mobile Menu */}
           <div className="flex items-center gap-3">
             <a
-              href="tel:+919876543210"
+              href="tel:+917200979643"
               className="hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-sky-200 hover:shadow-sky-300 transition-all duration-300 hover:-translate-y-0.5"
             >
               <Phone className="w-4 h-4" />
@@ -107,12 +107,12 @@ export default function Header() {
                     ))}
                   </nav>
                   <a
-                    href="tel:+919876543210"
+                    href="tel:+917200979643"
                     onClick={() => setMobileOpen(false)}
                     className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-500 text-white px-5 py-3 rounded-full text-sm font-semibold"
                   >
                     <Phone className="w-4 h-4" />
-                    Call +91 98765 43210
+                    Call +91 72009 79643
                   </a>
                 </div>
               </SheetContent>

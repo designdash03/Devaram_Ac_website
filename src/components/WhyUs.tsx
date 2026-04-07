@@ -78,10 +78,10 @@ export default function WhyUs() {
         </div>
 
         {/* Comparison Table */}
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
             {/* Header */}
-            <div className="grid grid-cols-3 bg-slate-50 border-b border-slate-200">
+            <div className="grid grid-cols-2 bg-slate-50 border-b border-slate-200">
               <div className="p-4 sm:p-5">
                 <span className="text-sm font-semibold text-muted-foreground">Feature</span>
               </div>
@@ -91,24 +91,17 @@ export default function WhyUs() {
                   <span className="text-sm font-bold text-sky-700">Deva Air Conditioning</span>
                 </div>
               </div>
-              <div className="p-4 sm:p-5 text-center">
-                <span className="text-sm font-semibold text-muted-foreground">Local Mechanic</span>
-              </div>
             </div>
 
             {/* Rows */}
             {comparisons.map((item, i) => (
-              <div key={i} className={`grid grid-cols-3 border-b border-slate-100 last:border-0 ${i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}`}>
+              <div key={i} className={`grid grid-cols-2 border-b border-slate-100 last:border-0 ${i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}`}>
                 <div className="p-3.5 sm:p-4">
                   <span className="text-sm font-medium text-foreground">{item.feature}</span>
                 </div>
                 <div className="p-3.5 sm:p-4 flex items-center justify-center gap-1.5 bg-sky-50/50">
                   <CheckCircle className="w-4 h-4 text-sky-500 shrink-0" />
-                  <span className="text-xs text-slate-600 hidden sm:inline">{item.usText}</span>
-                </div>
-                <div className="p-3.5 sm:p-4 flex items-center justify-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full border-2 border-slate-300 shrink-0" />
-                  <span className="text-xs text-slate-400 hidden sm:inline">{item.themText}</span>
+                  <span className="text-xs text-slate-600">{item.usText}</span>
                 </div>
               </div>
             ))}
@@ -120,8 +113,8 @@ export default function WhyUs() {
           {[
             { icon: <ShieldCheck className="w-6 h-6" />, text: "90-Day Warranty" },
             { icon: <Clock className="w-6 h-6" />, text: "Same-Day Service" },
-            { icon: <Award className="w-6 h-6" />, text: "15+ Years Experience" },
-            { icon: <Users className="w-6 h-6" />, text: "5,000+ Customers" },
+            { icon: <Award className="w-6 h-6" />, text: "5+ Years Experience" },
+            { icon: <Users className="w-6 h-6" />, text: "1,000+ Customers" },
           ].map((item, i) => (
             <div key={i} className="flex flex-col items-center gap-2 bg-slate-50 rounded-2xl p-5 border border-slate-100">
               <div className="text-sky-600">{item.icon}</div>

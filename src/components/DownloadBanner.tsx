@@ -30,14 +30,14 @@ export default function DownloadBanner() {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="tel:+919876543210"
+            href="tel:+917200979643"
             className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-400 to-cyan-400 hover:from-sky-300 hover:to-cyan-300 text-slate-900 px-8 py-4 rounded-full text-base font-bold shadow-2xl shadow-sky-500/30 hover:shadow-sky-500/50 transition-all hover:-translate-y-1"
           >
             <Phone className="w-5 h-5" />
             Call Now - Free Estimate
           </a>
           <a
-            href="https://wa.me/919876543210?text=Hi%2C%20I%20need%20AC%20service%20at%20my%20place.%20Please%20share%20details."
+            href="https://wa.me/917200979643?text=Hi%2C%20I%20need%20AC%20service%20at%20my%20place.%20Please%20share%20details."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 text-white px-8 py-4 rounded-full text-base font-bold transition-all hover:-translate-y-1"

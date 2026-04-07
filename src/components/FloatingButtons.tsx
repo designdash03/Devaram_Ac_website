@@ -35,7 +35,7 @@ export default function FloatingButtons() {
 
       {/* Call Button */}
       <a
-        href="tel:+919876543210"
+        href="tel:+917200979643"
         className="group relative"
       >
         <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-20" />
@@ -52,7 +52,7 @@ export default function FloatingButtons() {
 
       {/* WhatsApp Button */}
       <a
-        href="https://wa.me/919876543210?text=Hi%2C%20I%20need%20AC%20service%20at%20my%20place.%20Please%20share%20details."
+        href="https://wa.me/917200979643?text=Hi%2C%20I%20need%20AC%20service%20at%20my%20place.%20Please%20share%20details."
         target="_blank"
         rel="noopener noreferrer"
         className="group relative"

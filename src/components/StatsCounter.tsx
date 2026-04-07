@@ -88,9 +88,9 @@ export default function StatsCounter() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <CounterCard value={15} suffix="+" label="Years of Experience" icon={<Calendar className="w-5 h-5" />} />
-          <CounterCard value={5000} suffix="+" label="Happy Customers" icon={<ThumbsUp className="w-5 h-5" />} />
-          <CounterCard value={12000} suffix="+" label="ACs Serviced" icon={<Wrench className="w-5 h-5" />} />
+          <CounterCard value={5} suffix="+" label="Years of Experience" icon={<Calendar className="w-5 h-5" />} />
+          <CounterCard value={1000} suffix="+" label="Happy Customers" icon={<ThumbsUp className="w-5 h-5" />} />
+          <CounterCard value={1500} suffix="+" label="ACs Serviced" icon={<Wrench className="w-5 h-5" />} />
           <CounterCard value={98} suffix="%" label="Satisfaction Rate" icon={<Phone className="w-5 h-5" />} />
         </div>
       </div>

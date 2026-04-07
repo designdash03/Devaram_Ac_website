@@ -4,11 +4,9 @@ import CategoryBar from "@/components/CategoryBar";
 import About from "@/components/About";
 import FeaturedServices from "@/components/FeaturedServices";
 import HowItWorks from "@/components/HowItWorks";
-import Services from "@/components/Services";
 import StatsCounter from "@/components/StatsCounter";
 import WhyUs from "@/components/WhyUs";
 import Testimonials from "@/components/Testimonials";
-import FAQ from "@/components/FAQ";
 import DownloadBanner from "@/components/DownloadBanner";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -25,11 +23,9 @@ export default function Home() {
         <CategoryBar />
         <FeaturedServices />
         <HowItWorks />
-        <Services />
         <StatsCounter />
         <WhyUs />
         <Testimonials />
-        <FAQ />
         <DownloadBanner />
         <Contact />
       </main>

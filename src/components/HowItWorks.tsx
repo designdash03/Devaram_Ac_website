@@ -108,7 +108,7 @@ export default function HowItWorks() {
               </span>
             </div>
             <a
-              href="tel:+919876543210"
+              href="tel:+917200979643"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-sky-200 transition-all hover:-translate-y-0.5"
             >
               <Phone className="w-4 h-4" />

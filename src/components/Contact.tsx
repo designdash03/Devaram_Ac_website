@@ -20,9 +20,9 @@ const contactInfo = [
   {
     icon: <Phone className="w-6 h-6" />,
     title: "Call Us",
-    primary: "+91 98765 43210",
-    secondary: "+91 98765 43211",
-    action: "tel:+919876543210",
+    primary: "+91 72009 79643",
+    secondary: "+91 72009 79643",
+    action: "tel:+917200979643",
     actionText: "Call Now",
     color: "bg-sky-50",
     textColor: "text-sky-600",
@@ -30,10 +30,10 @@ const contactInfo = [
   {
     icon: <MessageCircle className="w-6 h-6" />,
     title: "WhatsApp",
-    primary: "+91 98765 43210",
+    primary: "+91 72009 79643",
     secondary: "Quick response guaranteed",
     action:
-      "https://wa.me/919876543210?text=Hi%2C%20I%20need%20AC%20service%20at%20my%20place.%20Please%20share%20details.",
+      "https://wa.me/917200979643?text=Hi%2C%20I%20need%20AC%20service%20at%20my%20place.%20Please%20share%20details.",
     actionText: "Chat Now",
     color: "bg-green-50",
     textColor: "text-green-600",
@@ -41,9 +41,9 @@ const contactInfo = [
   {
     icon: <Mail className="w-6 h-6" />,
     title: "Email Us",
-    primary: "info@devaaairconditioning.com",
-    secondary: "quotes@devaaairconditioning.com",
-    action: "mailto:info@devaaairconditioning.com",
+    primary: "devaramramasamy93@gmail.com",
+    secondary: "devaramramasamy93@gmail.com",
+    action: "mailto:devaramramasamy93@gmail.com",
     actionText: "Send Email",
     color: "bg-violet-50",
     textColor: "text-violet-600",
@@ -267,12 +267,12 @@ export default function Contact() {
                     Our Location
                   </h4>
                   <p className="text-sm text-foreground/70 leading-relaxed">
-                    123, Main Road, Anna Nagar,
+                    Coimbatore,
                     <br />
-                    Chennai - 600040, Tamil Nadu, India
+                    Tamil Nadu, India
                   </p>
                   <a
-                    href="https://maps.google.com/?q=Anna+Nagar+Chennai"
+                    href="https://maps.google.com/?q=Coimbatore"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs font-semibold text-sky-600 hover:text-sky-700 mt-2 transition-colors"

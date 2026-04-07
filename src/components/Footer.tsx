@@ -12,7 +12,7 @@ const footerLinks = {
     "Emergency Service",
   ],
   areas: [
-    "Anna Nagar",
+    "RS Puram",
     "Velachery",
     "Tambaram",
     "Adyar",
@@ -45,27 +45,27 @@ export default function Footer() {
             </div>
             <p className="text-sm text-slate-400 leading-relaxed mb-6">
               Professional AC repair, installation, and maintenance services.
-              Serving Chennai since 2009 with 5,000+ happy customers. Your comfort
+              Serving Coimbatore since 2021 with 1,000+ happy customers. Your comfort
               is our priority!
             </p>
             <div className="space-y-3">
               <a
-                href="tel:+919876543210"
+                href="tel:+917200979643"
                 className="flex items-center gap-2 text-sm text-slate-300 hover:text-sky-400 transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                +91 98765 43210
+                +91 72009 79643
               </a>
               <a
-                href="mailto:info@devaaairconditioning.com"
+                href="mailto:devaramramasamy93@gmail.com"
                 className="flex items-center gap-2 text-sm text-slate-300 hover:text-sky-400 transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                info@devaaairconditioning.com
+                devaramramasamy93@gmail.com
               </a>
               <div className="flex items-center gap-2 text-sm text-slate-300">
                 <MapPin className="w-4 h-4" />
-                Anna Nagar, Chennai
+                Coimbatore, Tamil Nadu
               </div>
             </div>
           </div>
@@ -119,14 +119,14 @@ export default function Footer() {
             </p>
             <div className="space-y-3">
               <a
-                href="tel:+919876543210"
+                href="tel:+917200979643"
                 className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors w-full justify-center"
               >
                 <Phone className="w-4 h-4" />
                 Call Now
               </a>
               <a
-                href="https://wa.me/919876543210"
+                href="https://wa.me/917200979643"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors w-full justify-center"
@@ -144,7 +144,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-500 text-center sm:text-left">
             © {new Date().getFullYear()} Deva Air Conditioning. All rights reserved. |
-            Professional AC Repair & Installation Services in Chennai.
+            Professional AC Repair & Installation Services in Coimbatore.
           </p>
           <button
             onClick={scrollToTop}
