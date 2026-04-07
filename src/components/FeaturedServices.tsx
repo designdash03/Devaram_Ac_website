@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ArrowRight, Shield, Clock, Award, Users, CheckCircle, ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { ArrowRight, Shield, Clock, Award, Users, CheckCircle, ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 
 /* Each media item can be an image (url ending in image ext) or a video (.mp4/.webm) */
 interface MediaItem {
@@ -67,7 +67,6 @@ function ServiceMediaCarousel({
 }) {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
   const [videoProgress, setVideoProgress] = useState(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -126,22 +125,15 @@ function ServiceMediaCarousel({
     };
   }, [isVideo, current, next]);
 
-  // Auto-play & mute video when it becomes active
+  // Auto-play video when it becomes active
   useEffect(() => {
     const vid = videoRef.current;
     if (!vid || !isVideo) return;
-    vid.muted = isMuted;
+    vid.muted = true;
     if (isPaused) {
       vid.play().catch(() => {});
     }
-  }, [current, isVideo, isMuted, isPaused]);
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
-  };
+  }, [current, isVideo, isPaused]);
 
   const togglePlayPause = () => {
     const vid = videoRef.current;
@@ -173,7 +165,7 @@ function ServiceMediaCarousel({
               src={item.src}
               poster={item.poster}
               className="w-full h-full object-cover"
-              muted={isMuted}
+              muted
               playsInline
               loop
               preload="metadata"
@@ -201,19 +193,6 @@ function ServiceMediaCarousel({
               <Pause className="w-5 h-5 text-slate-800" />
             ) : (
               <Play className="w-5 h-5 text-slate-800 ml-0.5" />
-            )}
-          </button>
-
-          {/* Mute Button (top-right) */}
-          <button
-            onClick={toggleMute}
-            className="pointer-events-auto absolute top-2 right-2 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-            aria-label={isMuted ? "Unmute" : "Mute"}
-          >
-            {isMuted ? (
-              <VolumeX className="w-3.5 h-3.5" />
-            ) : (
-              <Volume2 className="w-3.5 h-3.5" />
             )}
           </button>
 
