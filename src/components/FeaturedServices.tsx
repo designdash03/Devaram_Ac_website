@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ArrowRight, Shield, Clock, Award, Users, CheckCircle, ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
+import { ArrowRight, Shield, Clock, Award, Users, CheckCircle, ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX } from "lucide-react";
 
-/* Each media item can be an image (url ending in image ext) or a video (.mp4/.webm) */
+/* Each media item can be an image or a video */
 interface MediaItem {
   type: "image" | "video";
   src: string;
-  poster?: string; // optional poster image for video
+  poster?: string;
 }
 
 const services = [
@@ -57,7 +57,7 @@ const services = [
   },
 ];
 
-/* ────────────── Media Carousel (Photos + Videos) ────────────── */
+/* ────────────── Media Carousel ────────────── */
 function ServiceMediaCarousel({
   media,
   title,
@@ -66,7 +66,8 @@ function ServiceMediaCarousel({
   title: string;
 }) {
   const [current, setCurrent] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const [videoProgress, setVideoProgress] = useState(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -75,81 +76,105 @@ function ServiceMediaCarousel({
   const currentItem = media[current];
   const isVideo = currentItem?.type === "video";
 
-  const next = useCallback(() => {
+  const goNext = useCallback(() => {
     setCurrent((prev) => (prev + 1) % totalItems);
     setVideoProgress(0);
+    setIsVideoPlaying(false);
   }, [totalItems]);
 
-  const prev = () => {
+  const goPrev = () => {
     setCurrent((c) => (c - 1 + totalItems) % totalItems);
     setVideoProgress(0);
+    setIsVideoPlaying(false);
   };
 
-  // Auto-rotate: pause timer when a video is playing (let video run)
-  useEffect(() => {
-    if (isPaused || isVideoPlaying) return;
-    const timer = setInterval(next, isVideo ? 6000 : 3000);
-    return () => clearInterval(timer);
-  }, [isPaused, isVideoPlaying, isVideo, next]);
+  const goTo = (idx: number) => {
+    setCurrent(idx);
+    setVideoProgress(0);
+    setIsVideoPlaying(false);
+  };
 
-  // Handle video events
+  // Auto-rotate when NOT hovering
+  useEffect(() => {
+    if (isHovering || isVideoPlaying) return;
+    const timer = setInterval(goNext, isVideo ? 5000 : 3000);
+    return () => clearInterval(timer);
+  }, [isHovering, isVideoPlaying, isVideo, goNext]);
+
+  // When switching to a video, reset it
   useEffect(() => {
     const vid = videoRef.current;
     if (!vid || !isVideo) {
       setIsVideoPlaying(false);
       return;
     }
+    // Reset video to start
+    vid.currentTime = 0;
+    vid.pause();
+    setIsVideoPlaying(false);
+  }, [current, isVideo]);
 
-    const handlePlay = () => setIsVideoPlaying(true);
-    const handlePause = () => setIsVideoPlaying(false);
-    const handleEnded = () => {
+  // Listen to video events
+  useEffect(() => {
+    const vid = videoRef.current;
+    if (!vid || !isVideo) return;
+
+    const onPlay = () => setIsVideoPlaying(true);
+    const onPause = () => setIsVideoPlaying(false);
+    const onEnded = () => {
       setIsVideoPlaying(false);
-      next();
+      goNext();
     };
-    const handleTimeUpdate = () => {
+    const onTimeUpdate = () => {
       if (vid.duration) {
         setVideoProgress((vid.currentTime / vid.duration) * 100);
       }
     };
 
-    vid.addEventListener("play", handlePlay);
-    vid.addEventListener("pause", handlePause);
-    vid.addEventListener("ended", handleEnded);
-    vid.addEventListener("timeupdate", handleTimeUpdate);
+    vid.addEventListener("play", onPlay);
+    vid.addEventListener("pause", onPause);
+    vid.addEventListener("ended", onEnded);
+    vid.addEventListener("timeupdate", onTimeUpdate);
 
     return () => {
-      vid.removeEventListener("play", handlePlay);
-      vid.removeEventListener("pause", handlePause);
-      vid.removeEventListener("ended", handleEnded);
-      vid.removeEventListener("timeupdate", handleTimeUpdate);
+      vid.removeEventListener("play", onPlay);
+      vid.removeEventListener("pause", onPause);
+      vid.removeEventListener("ended", onEnded);
+      vid.removeEventListener("timeupdate", onTimeUpdate);
     };
-  }, [isVideo, current, next]);
+  }, [isVideo, current, goNext]);
 
-  // Auto-play video when it becomes active
-  useEffect(() => {
-    const vid = videoRef.current;
-    if (!vid || !isVideo) return;
-    vid.muted = true;
-    if (isPaused) {
-      vid.play().catch(() => {});
-    }
-  }, [current, isVideo, isPaused]);
-
+  // Play button — plays with audio or muted
   const togglePlayPause = () => {
     const vid = videoRef.current;
     if (!vid || !isVideo) return;
     if (vid.paused) {
+      vid.muted = isMuted;
       vid.play().catch(() => {});
     } else {
       vid.pause();
     }
   };
 
+  // Mute / Unmute
+  const toggleMute = () => {
+    const vid = videoRef.current;
+    if (!vid || !isVideo) return;
+    const newMuted = !isMuted;
+    vid.muted = newMuted;
+    setIsMuted(newMuted);
+    // If video was playing, it continues with new mute state
+    // If video was paused, play it with audio
+    if (vid.paused) {
+      vid.play().catch(() => {});
+    }
+  };
+
   return (
     <div
       className="relative aspect-[4/3] overflow-hidden bg-slate-900"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
     >
       {/* Media Stack */}
       {media.map((item, idx) => (
@@ -165,7 +190,7 @@ function ServiceMediaCarousel({
               src={item.src}
               poster={item.poster}
               className="w-full h-full object-cover"
-              muted
+              muted={isMuted}
               playsInline
               loop
               preload="metadata"
@@ -180,38 +205,58 @@ function ServiceMediaCarousel({
         </div>
       ))}
 
-      {/* Video Controls Overlay */}
+      {/* Video Controls */}
       {isVideo && (
-        <div className="absolute inset-0 z-[8] flex items-center justify-center pointer-events-none">
-          {/* Big Play/Pause Button (center) */}
-          <button
-            onClick={togglePlayPause}
-            className="pointer-events-auto w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow-lg hover:bg-white transition-all hover:scale-110"
-            aria-label={isVideoPlaying ? "Pause video" : "Play video"}
-          >
-            {isVideoPlaying ? (
-              <Pause className="w-5 h-5 text-slate-800" />
-            ) : (
-              <Play className="w-5 h-5 text-slate-800 ml-0.5" />
-            )}
-          </button>
+        <>
+          {/* Dark overlay when paused (not playing) */}
+          {!isVideoPlaying && (
+            <div className="absolute inset-0 bg-black/20 z-[6]" />
+          )}
 
-          {/* Video Progress Bar */}
-          <div className="absolute bottom-8 left-3 right-3">
-            <div className="w-full h-1 bg-white/30 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-sky-400 rounded-full transition-all duration-300"
-                style={{ width: `${videoProgress}%` }}
-              />
+          <div className="absolute inset-0 z-[8] flex items-center justify-center pointer-events-none">
+            {/* Play/Pause Button (center) */}
+            <button
+              onClick={togglePlayPause}
+              className="pointer-events-auto w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg hover:bg-white transition-all hover:scale-110"
+              aria-label={isVideoPlaying ? "Pause video" : "Play video"}
+            >
+              {isVideoPlaying ? (
+                <Pause className="w-6 h-6 text-slate-800" />
+              ) : (
+                <Play className="w-7 h-7 text-slate-800 ml-1" />
+              )}
+            </button>
+
+            {/* Mute Button (top-right) */}
+            <button
+              onClick={toggleMute}
+              className="pointer-events-auto absolute top-2 right-2 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+              aria-label={isMuted ? "Unmute" : "Mute"}
+            >
+              {isMuted ? (
+                <VolumeX className="w-4 h-4" />
+              ) : (
+                <Volume2 className="w-4 h-4" />
+              )}
+            </button>
+
+            {/* Video Progress Bar */}
+            <div className="absolute bottom-8 left-3 right-3">
+              <div className="w-full h-1.5 bg-white/30 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-sky-400 rounded-full transition-all duration-300"
+                  style={{ width: `${videoProgress}%` }}
+                />
+              </div>
             </div>
-          </div>
 
-          {/* "VIDEO" badge */}
-          <span className="absolute top-2 left-2 flex items-center gap-1 bg-red-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
-            <Play className="w-2.5 h-2.5" />
-            Video
-          </span>
-        </div>
+            {/* "VIDEO" badge */}
+            <span className="absolute top-2 left-2 flex items-center gap-1 bg-red-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+              <Play className="w-2.5 h-2.5" />
+              Video
+            </span>
+          </div>
+        </>
       )}
 
       {/* Photo indicator */}
@@ -223,28 +268,28 @@ function ServiceMediaCarousel({
 
       {/* Left / Right Arrows */}
       <button
-        onClick={prev}
-        className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-all z-[10]"
-        style={{ opacity: isPaused ? 1 : 0 }}
+        onClick={goPrev}
+        className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-all z-[10] opacity-0 hover:opacity-100"
+        style={{ opacity: isHovering ? 1 : 0 }}
         aria-label="Previous"
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
       <button
-        onClick={next}
-        className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-all z-[10]"
-        style={{ opacity: isPaused ? 1 : 0 }}
+        onClick={goNext}
+        className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-all z-[10] opacity-0 hover:opacity-100"
+        style={{ opacity: isHovering ? 1 : 0 }}
         aria-label="Next"
       >
         <ChevronRight className="w-4 h-4" />
       </button>
 
-      {/* Dot Indicators — show different styles for photo vs video */}
+      {/* Dot Indicators */}
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-[10]">
         {media.map((item, idx) => (
           <button
             key={idx}
-            onClick={() => { setCurrent(idx); setVideoProgress(0); }}
+            onClick={() => goTo(idx)}
             className={`rounded-full transition-all duration-300 flex items-center justify-center ${
               idx === current
                 ? "w-5 h-2 bg-white"
@@ -303,13 +348,11 @@ export default function FeaturedServices() {
               key={index}
               className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden"
             >
-              {/* Auto-rotating Media Carousel (Photos + Videos) */}
               <ServiceMediaCarousel
                 media={service.media}
                 title={service.title}
               />
 
-              {/* Badge */}
               {service.badge && (
                 <div className="relative -mt-1 z-10 ml-3">
                   <span className="bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-full -translate-y-1/2 inline-block shadow">
@@ -318,7 +361,6 @@ export default function FeaturedServices() {
                 </div>
               )}
 
-              {/* Content */}
               <div className="p-4">
                 <p className="text-xs text-slate-500 font-medium mb-2">{service.subtitle}</p>
                 <div className="space-y-1.5 mb-4">
