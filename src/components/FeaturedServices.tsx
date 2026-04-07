@@ -13,10 +13,9 @@ interface MediaItem {
 const services = [
   {
     media: [
-      { type: "image", src: "/ac-service-1.jpg" },
-      { type: "image", src: "/ac-service-2.jpg" },
-      { type: "video", src: "/videos/ac-repair-demo.mp4", poster: "/ac-service-3.jpg" },
-      // Replace with your own photos/videos for AC Repair
+      { type: "video", src: "/videos/ac-repair-1.mp4" },
+      { type: "video", src: "/videos/ac-repair-2.mp4" },
+      { type: "video", src: "/videos/ac-repair-3.mp4" },
     ],
     title: "AC Repair & Fix",
     subtitle: "All brands & models",
@@ -25,10 +24,9 @@ const services = [
   },
   {
     media: [
-      { type: "image", src: "/ac-service-3.jpg" },
-      { type: "video", src: "/videos/ac-installation-demo.mp4", poster: "/ac-service-4.jpg" },
-      { type: "image", src: "/technician-1.jpg" },
-      // Replace with your own photos/videos for AC Installation
+      { type: "video", src: "/videos/ac-install-1.mp4" },
+      { type: "video", src: "/videos/ac-install-2.mp4" },
+      { type: "video", src: "/videos/ac-install-3.mp4" },
     ],
     title: "AC Installation",
     subtitle: "Split, Window & Cassette",
@@ -37,10 +35,9 @@ const services = [
   },
   {
     media: [
-      { type: "image", src: "/ac-service-2.jpg" },
-      { type: "image", src: "/ac-service-1.jpg" },
-      { type: "video", src: "/videos/gas-refill-demo.mp4", poster: "/ac-service-4.jpg" },
-      // Replace with your own photos/videos for Gas Refill
+      { type: "video", src: "/videos/gas-refill-1.mp4" },
+      { type: "image", src: "/gas-refill-2.jpeg" },
+      { type: "image", src: "/gas-refill-3.jpeg" },
     ],
     title: "Gas Refill & Leak Fix",
     subtitle: "R32, R410A, R22",
@@ -49,10 +46,9 @@ const services = [
   },
   {
     media: [
-      { type: "video", src: "/videos/ac-cleaning-demo.mp4", poster: "/ac-service-4.jpg" },
-      { type: "image", src: "/ac-service-3.jpg" },
-      { type: "image", src: "/ac-service-1.jpg" },
-      // Replace with your own photos/videos for Deep Cleaning
+      { type: "video", src: "/videos/ac-clean-1.mp4" },
+      { type: "video", src: "/videos/ac-clean-2.mp4" },
+      { type: "video", src: "/videos/ac-clean-3.mp4" },
     ],
     title: "Deep Cleaning & Service",
     subtitle: "Complete AC maintenance",
