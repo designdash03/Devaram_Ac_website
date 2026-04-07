@@ -52,16 +52,7 @@ const sampleReviews = [
 ];
 
 export async function GET() {
-  try {
-    const { db } = await import("@/lib/db");
-    const reviews = await db.review.findMany({
-      orderBy: { createdAt: "desc" },
-    });
-    return NextResponse.json(reviews);
-  } catch (error) {
-    // If database is not set up, return sample reviews
-    return NextResponse.json(sampleReviews);
-  }
+  return NextResponse.json(sampleReviews);
 }
 
 export async function POST(request: Request) {
@@ -83,31 +74,17 @@ export async function POST(request: Request) {
       );
     }
 
-    try {
-      const { db } = await import("@/lib/db");
-      const review = await db.review.create({
-        data: {
-          name: name.trim(),
-          location: location?.trim() || "",
-          rating: Number(rating),
-          text: text.trim(),
-        },
-      });
-      return NextResponse.json(review, { status: 201 });
-    } catch (dbError) {
-      // If database is not set up, just return success with sample data
-      return NextResponse.json(
-        {
-          id: Date.now().toString(),
-          name: name.trim(),
-          location: location?.trim() || "",
-          rating: Number(rating),
-          text: text.trim(),
-          createdAt: new Date().toISOString(),
-        },
-        { status: 201 }
-      );
-    }
+    return NextResponse.json(
+      {
+        id: Date.now().toString(),
+        name: name.trim(),
+        location: location?.trim() || "",
+        rating: Number(rating),
+        text: text.trim(),
+        createdAt: new Date().toISOString(),
+      },
+      { status: 201 }
+    );
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to submit review" },

@@ -1,12 +1,21 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ArrowRight, Shield, Clock, Award, Users, CheckCircle, ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { ArrowRight, Shield, Clock, Award, Users, CheckCircle, ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX, Snowflake, Wrench, Wind, Droplets, ImageOff, VideoOff } from "lucide-react";
 
 interface MediaItem {
   type: "image" | "video";
   src: string;
 }
+
+const placeholderColors = [
+  "linear-gradient(135deg, #0ea5e9, #0284c7, #0369a1)",
+  "linear-gradient(135deg, #06b6d4, #0891b2, #0e7490)",
+  "linear-gradient(135deg, #38bdf8, #0ea5e9, #0284c7)",
+  "linear-gradient(135deg, #7dd3fc, #38bdf8, #0ea5e9)",
+];
+
+const placeholderIcons = [<Snowflake key="s" />, <Wrench key="w" />, <Wind key="d" />, <Droplets key="dp" />];
 
 const services = [
   {
@@ -55,40 +64,73 @@ const services = [
   },
 ];
 
-function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: string }) {
+function Placeholder({ serviceIndex }: { serviceIndex: number }) {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        background: placeholderColors[serviceIndex],
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 12,
+      }}
+    >
+      <div style={{ opacity: 0.3 }}>
+        {placeholderIcons[serviceIndex] && (
+          <svg width={64} height={64} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={1} strokeLinecap="round" strokeLinejoin="round">
+            {serviceIndex === 0 && <><path d="M2 12h20M12 2v20M20 16l-4-4 4-4M4 8l4 4-4 4M20 8l-4 4M4 16l4-4" /></>}
+            {serviceIndex === 1 && <><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></>}
+            {serviceIndex === 2 && <><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2M9.6 4.6A2 2 0 1 1 11 8H2M12.6 19.4A2 2 0 1 0 14 16H2" /></>}
+            {serviceIndex === 3 && <><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" /></>}
+          </svg>
+        )}
+      </div>
+      <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 600, textAlign: "center", padding: "0 20px" }}>
+        {services[serviceIndex]?.title}
+      </div>
+      <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 11, display: "flex", alignItems: "center", gap: 4 }}>
+        <VideoOff style={{ width: 12, height: 12 }} />
+        Media not found
+      </div>
+    </div>
+  );
+}
+
+function ServiceMediaCarousel({ media, title, serviceIndex }: { media: MediaItem[]; title: string; serviceIndex: number }) {
   const [current, setCurrent] = useState(0);
   const [hovering, setHovering] = useState(false);
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [mediaError, setMediaError] = useState<boolean[]>(media.map(() => false));
 
   const videoEl = useRef<HTMLVideoElement>(null);
 
   const isVideo = media[current].type === "video";
   const total = media.length;
+  const currentError = mediaError[current] || false;
 
-  // Go to next slide
   const nextSlide = useCallback(() => {
     pauseVideo();
     setCurrent((p) => (p + 1) % total);
     setProgress(0);
   }, [total]);
 
-  // Go to previous slide
   const prevSlide = () => {
     pauseVideo();
     setCurrent((c) => (c - 1 + total) % total);
     setProgress(0);
   };
 
-  // Go to specific slide
   const goToSlide = (idx: number) => {
     pauseVideo();
     setCurrent(idx);
     setProgress(0);
   };
 
-  // Pause current video
   const pauseVideo = () => {
     if (videoEl.current) {
       videoEl.current.pause();
@@ -97,14 +139,12 @@ function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: str
     setPlaying(false);
   };
 
-  // Auto-rotate every 5 seconds when not hovering and not playing
   useEffect(() => {
     if (hovering || playing) return;
     const timer = setInterval(nextSlide, 5000);
     return () => clearInterval(timer);
   }, [hovering, playing, nextSlide]);
 
-  // Reset when slide changes
   useEffect(() => {
     setPlaying(false);
     setProgress(0);
@@ -113,37 +153,35 @@ function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: str
     }
   }, [current]);
 
-  // Play or pause
   const togglePlay = () => {
     const v = videoEl.current;
     if (!v) return;
-
     if (v.paused) {
       v.muted = muted;
-      v.play()
-        .then(() => setPlaying(true))
-        .catch((e) => console.log("Play failed:", e));
+      v.play().then(() => setPlaying(true)).catch(() => {});
     } else {
       v.pause();
       setPlaying(false);
     }
   };
 
-  // Mute or unmute
   const toggleMute = () => {
     const v = videoEl.current;
     if (!v) return;
-
     const newMuted = !muted;
     v.muted = newMuted;
     setMuted(newMuted);
-
-    // Auto-play when unmuting
     if (v.paused && !newMuted) {
-      v.play()
-        .then(() => setPlaying(true))
-        .catch(() => {});
+      v.play().then(() => setPlaying(true)).catch(() => {});
     }
+  };
+
+  const handleMediaError = (idx: number) => {
+    setMediaError((prev) => {
+      const next = [...prev];
+      next[idx] = true;
+      return next;
+    });
   };
 
   return (
@@ -153,19 +191,22 @@ function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: str
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
-      {/* Only render the CURRENT media item */}
-      {isVideo ? (
+      {/* Show placeholder if file is missing, otherwise show media */}
+      {currentError ? (
+        <Placeholder serviceIndex={serviceIndex} />
+      ) : isVideo ? (
         <video
           ref={videoEl}
           src={media[current].src}
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
           playsInline
           loop
-          preload="auto"
+          preload="metadata"
           muted={muted}
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
           onEnded={nextSlide}
+          onError={() => handleMediaError(current)}
           onTimeUpdate={() => {
             const v = videoEl.current;
             if (v && v.duration) setProgress((v.currentTime / v.duration) * 100);
@@ -176,11 +217,12 @@ function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: str
           src={media[current].src}
           alt={title}
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          onError={() => handleMediaError(current)}
         />
       )}
 
-      {/* Dark overlay when video is paused */}
-      {isVideo && !playing && (
+      {/* Dark overlay when video is paused (only if file loaded) */}
+      {isVideo && !playing && !currentError && (
         <div
           style={{
             position: "absolute",
@@ -191,8 +233,8 @@ function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: str
         />
       )}
 
-      {/* Video Controls */}
-      {isVideo && (
+      {/* Video Controls (only if file loaded) */}
+      {isVideo && !currentError && (
         <div
           style={{
             position: "absolute",
@@ -203,7 +245,6 @@ function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: str
             justifyContent: "center",
           }}
         >
-          {/* Play/Pause Button */}
           <button
             onClick={togglePlay}
             style={{
@@ -227,7 +268,6 @@ function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: str
             )}
           </button>
 
-          {/* Mute Button - Top Right */}
           <button
             onClick={toggleMute}
             style={{
@@ -255,7 +295,6 @@ function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: str
             )}
           </button>
 
-          {/* VIDEO Badge - Top Left */}
           <div
             style={{
               position: "absolute",
@@ -278,7 +317,6 @@ function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: str
             Video
           </div>
 
-          {/* Progress Bar - Bottom */}
           <div
             style={{
               position: "absolute",
@@ -301,8 +339,8 @@ function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: str
         </div>
       )}
 
-      {/* Photo Badge */}
-      {!isVideo && (
+      {/* Photo Badge (only if file loaded) */}
+      {!isVideo && !currentError && (
         <div
           style={{
             position: "absolute",
@@ -324,7 +362,7 @@ function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: str
         </div>
       )}
 
-      {/* Arrow Buttons - Only show on hover */}
+      {/* Arrow Buttons */}
       {hovering && (
         <>
           <button
@@ -473,7 +511,7 @@ export default function FeaturedServices() {
               key={index}
               className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden"
             >
-              <ServiceMediaCarousel media={service.media} title={service.title} />
+              <ServiceMediaCarousel media={service.media} title={service.title} serviceIndex={index} />
 
               {service.badge && (
                 <div className="relative -mt-1 z-10 ml-3">
