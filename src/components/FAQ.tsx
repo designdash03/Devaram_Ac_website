@@ -18,7 +18,7 @@ const faqs = [
   {
     question: "Do you provide service warranty?",
     answer:
-      "Absolutely! Every repair service from CoolAir Pro comes with a 90-day service warranty. If the same issue recurs within the warranty period, we will fix it free of charge. For AMC plan customers, the warranty is extended for the entire contract duration. We use only genuine spare parts that carry their own manufacturer warranty, giving you double protection.",
+      "Absolutely! Every repair service from Deva Air Conditioning comes with a 90-day service warranty. If the same issue recurs within the warranty period, we will fix it free of charge. For AMC plan customers, the warranty is extended for the entire contract duration. We use only genuine spare parts that carry their own manufacturer warranty, giving you double protection.",
   },
   {
     question: "What brands of AC do you service?",
@@ -43,7 +43,7 @@ const faqs = [
   {
     question: "Are your technicians certified and background-verified?",
     answer:
-      "Yes, all CoolAir Pro technicians are certified professionals with a minimum of 3 years of experience. Every technician undergoes a thorough background verification process before joining our team. They also receive ongoing training on the latest AC technologies and repair techniques. Our team is known for being polite, punctual, and respectful of your home and property.",
+      "Yes, all Deva Air Conditioning technicians are certified professionals with a minimum of 3 years of experience. Every technician undergoes a thorough background verification process before joining our team. They also receive ongoing training on the latest AC technologies and repair techniques. Our team is known for being polite, punctual, and respectful of your home and property.",
   },
   {
     question: "Do you provide estimates before starting work?",

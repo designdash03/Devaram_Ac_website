@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://coolairpro.com"),
-  title: "CoolAir Pro - Professional AC Repair, Installation & Service | Fast & Reliable",
+  metadataBase: new URL("https://devaaairconditioning.com"),
+  title: "Deva Air Conditioning - Professional AC Repair, Installation & Service | Fast & Reliable",
   description:
     "Expert AC repair, installation, gas refill, and maintenance services. 15+ years of trusted experience. Same-day service available. Call now for a free estimate!",
   keywords: [
@@ -33,17 +33,17 @@ export const metadata: Metadata = {
     "AC annual maintenance",
     "emergency AC repair",
   ],
-  authors: [{ name: "CoolAir Pro" }],
+  authors: [{ name: "Deva Air Conditioning" }],
   icons: {
     icon: "/logo.png",
   },
   openGraph: {
-    title: "CoolAir Pro - Professional AC Repair & Installation Services",
+    title: "Deva Air Conditioning - Professional AC Repair & Installation Services",
     description:
       "Expert AC repair, installation, gas refill, and maintenance services. 15+ years of trusted experience. Same-day service available!",
     type: "website",
     locale: "en_US",
-    siteName: "CoolAir Pro",
+    siteName: "Deva Air Conditioning",
     images: [
       {
         url: "/hero-bg.jpg",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CoolAir Pro - Professional AC Repair & Installation Services",
+    title: "Deva Air Conditioning - Professional AC Repair & Installation Services",
     description:
       "Expert AC repair, installation, gas refill, and maintenance. Same-day service!",
   },
@@ -86,12 +86,12 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "HVACBusiness",
-              name: "CoolAir Pro",
+              name: "Deva Air Conditioning",
               description:
                 "Professional AC repair, installation, and maintenance services",
-              url: "https://coolairpro.com",
+              url: "https://devaaairconditioning.com",
               telephone: "+91-98765-43210",
-              email: "info@coolairpro.com",
+              email: "info@devaaairconditioning.com",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "123, Main Road, Anna Nagar",
@@ -197,7 +197,7 @@ export default function RootLayout({
             }),
           }}
         />
-        <link rel="canonical" href="https://coolairpro.com" />
+        <link rel="canonical" href="https://devaaairconditioning.com" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}

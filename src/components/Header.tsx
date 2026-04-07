@@ -42,7 +42,7 @@ export default function Header() {
             </div>
             <div className="flex flex-col">
               <span className="text-lg md:text-xl font-bold bg-gradient-to-r from-sky-600 to-cyan-600 bg-clip-text text-transparent leading-tight">
-                CoolAir Pro
+                Deva Air Conditioning
               </span>
               <span className="text-[10px] md:text-xs text-muted-foreground leading-tight">
                 AC Expert Since 2009
@@ -91,7 +91,7 @@ export default function Header() {
                       <Snowflake className="w-6 h-6 text-white" />
                     </div>
                     <span className="text-lg font-bold bg-gradient-to-r from-sky-600 to-cyan-600 bg-clip-text text-transparent">
-                      CoolAir Pro
+                      Deva Air Conditioning
                     </span>
                   </div>
                   <nav className="flex flex-col gap-1">

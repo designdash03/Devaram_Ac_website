@@ -41,9 +41,9 @@ const contactInfo = [
   {
     icon: <Mail className="w-6 h-6" />,
     title: "Email Us",
-    primary: "info@coolairpro.com",
-    secondary: "quotes@coolairpro.com",
-    action: "mailto:info@coolairpro.com",
+    primary: "info@devaaairconditioning.com",
+    secondary: "quotes@devaaairconditioning.com",
+    action: "mailto:info@devaaairconditioning.com",
     actionText: "Send Email",
     color: "bg-violet-50",
     textColor: "text-violet-600",
@@ -251,7 +251,7 @@ export default function Contact() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="CoolAir Pro Location"
+                  title="Deva Air Conditioning Location"
                 />
               </CardContent>
             </Card>

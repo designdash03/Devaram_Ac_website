@@ -63,7 +63,7 @@ export default function HowItWorks() {
           <p className="text-lg text-muted-foreground leading-relaxed">
             We have simplified the entire process to make it hassle-free for you.
             From booking to completion, here is what to expect when you choose
-            CoolAir Pro.
+            Deva Air Conditioning.
           </p>
         </div>
 

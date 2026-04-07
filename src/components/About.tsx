@@ -107,7 +107,7 @@ export default function About() {
             </span>
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            CoolAir Pro has been the go-to AC service provider for thousands of
+            Deva Air Conditioning has been the go-to AC service provider for thousands of
             homes and businesses. Our commitment to quality, transparency, and
             customer satisfaction sets us apart from the rest.
           </p>
@@ -141,7 +141,7 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
           <div>
             <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">
-              What Makes CoolAir Pro Different?
+              What Makes Deva Air Conditioning Different?
             </h3>
             <p className="text-muted-foreground mb-8 leading-relaxed">
               We are not just another AC repair service. We are your long-term

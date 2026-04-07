@@ -40,7 +40,7 @@ export default function Footer() {
                 <Snowflake className="w-6 h-6 text-white" />
               </div>
               <div>
-                <span className="text-lg font-bold text-white">CoolAir Pro</span>
+                <span className="text-lg font-bold text-white">Deva Air Conditioning</span>
               </div>
             </div>
             <p className="text-sm text-slate-400 leading-relaxed mb-6">
@@ -57,11 +57,11 @@ export default function Footer() {
                 +91 98765 43210
               </a>
               <a
-                href="mailto:info@coolairpro.com"
+                href="mailto:info@devaaairconditioning.com"
                 className="flex items-center gap-2 text-sm text-slate-300 hover:text-sky-400 transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                info@coolairpro.com
+                info@devaaairconditioning.com
               </a>
               <div className="flex items-center gap-2 text-sm text-slate-300">
                 <MapPin className="w-4 h-4" />
@@ -143,7 +143,7 @@ export default function Footer() {
       <div className="border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-500 text-center sm:text-left">
-            © {new Date().getFullYear()} CoolAir Pro. All rights reserved. |
+            © {new Date().getFullYear()} Deva Air Conditioning. All rights reserved. |
             Professional AC Repair & Installation Services in Chennai.
           </p>
           <button

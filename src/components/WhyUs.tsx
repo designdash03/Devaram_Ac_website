@@ -67,10 +67,10 @@ export default function WhyUs() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <span className="inline-block text-sm font-semibold text-sky-600 bg-sky-50 px-4 py-1.5 rounded-full mb-4">
-            Why CoolAir Pro
+            Why Deva Air Conditioning
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground mb-4">
-            The CoolAir Pro <span className="bg-gradient-to-r from-sky-500 to-cyan-500 bg-clip-text text-transparent">Advantage</span>
+            The Deva Air Conditioning <span className="bg-gradient-to-r from-sky-500 to-cyan-500 bg-clip-text text-transparent">Advantage</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
             See why thousands of customers trust us over local mechanics. We set the standard for professional AC service.
@@ -88,7 +88,7 @@ export default function WhyUs() {
               <div className="p-4 sm:p-5 text-center bg-sky-50">
                 <div className="flex items-center justify-center gap-1.5">
                   <Snowflake className="w-4 h-4 text-sky-600" />
-                  <span className="text-sm font-bold text-sky-700">CoolAir Pro</span>
+                  <span className="text-sm font-bold text-sky-700">Deva Air Conditioning</span>
                 </div>
               </div>
               <div className="p-4 sm:p-5 text-center">

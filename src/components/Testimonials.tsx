@@ -19,9 +19,9 @@ interface Review {
 
 const defaultReviews = [
   { id: "1", name: "Rajesh Kumar", location: "Anna Nagar", rating: 5, text: "Excellent service! The technician arrived within 2 hours and fixed my Daikin AC. Very professional, explained the issue clearly. Transparent pricing with no hidden charges. Highly recommend!", createdAt: "2026-03-15" },
-  { id: "2", name: "Priya Sharma", location: "T. Nagar", rating: 5, text: "We have been using CoolAir Pro for 3 years under their AMC plan. Service is consistently excellent and team is always punctual. They have serviced 12 ACs across our office. Truly reliable!", createdAt: "2026-03-01" },
-  { id: "3", name: "Mohammed Ali", location: "Velachery", rating: 5, text: "My LG AC was not cooling and another mechanic quoted heavily. CoolAir Pro found a small leak, fixed it and refilled gas for a fair price. Honest and trustworthy service!", createdAt: "2026-02-20" },
-  { id: "4", name: "Sunita Devi", location: "Porur", rating: 5, text: "Got a new Voltas AC installed by CoolAir Pro. Neat and professional work. They took care of piping, drainage and wall mounting. Cleaned up everything after. Very satisfied!", createdAt: "2026-03-25" },
+  { id: "2", name: "Priya Sharma", location: "T. Nagar", rating: 5, text: "We have been using Deva Air Conditioning for 3 years under their AMC plan. Service is consistently excellent and team is always punctual. They have serviced 12 ACs across our office. Truly reliable!", createdAt: "2026-03-01" },
+  { id: "3", name: "Mohammed Ali", location: "Velachery", rating: 5, text: "My LG AC was not cooling and another mechanic quoted heavily. Deva Air Conditioning found a small leak, fixed it and refilled gas for a fair price. Honest and trustworthy service!", createdAt: "2026-02-20" },
+  { id: "4", name: "Sunita Devi", location: "Porur", rating: 5, text: "Got a new Voltas AC installed by Deva Air Conditioning. Neat and professional work. They took care of piping, drainage and wall mounting. Cleaned up everything after. Very satisfied!", createdAt: "2026-03-25" },
   { id: "5", name: "Karthik Rajan", location: "OMR", rating: 4, text: "Emergency AC breakdown at 10 PM - they sent someone within an hour! Technician was well-equipped and fixed the compressor issue on the spot. Worth every penny.", createdAt: "2026-02-01" },
   { id: "6", name: "Lakshmi Narayanan", location: "Adyar", rating: 5, text: "Very polite and respectful technicians. They patiently answered all my questions and did a thorough cleaning. My Samsung AC is running like new now! Wonderful experience.", createdAt: "2026-03-28" },
   { id: "7", name: "Vijay Murugan", location: "Coimbatore", rating: 5, text: "Best AC service in Coimbatore. Used them for gas refill and general service. The technician was very knowledgeable and completed the work quickly. Fair pricing.", createdAt: "2026-03-10" },
@@ -100,7 +100,7 @@ export default function Testimonials() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground mb-4">
             What Our Customers <span className="bg-gradient-to-r from-sky-500 to-cyan-500 bg-clip-text text-transparent">Say About Us</span>
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">Real reviews from real customers. Share your experience with CoolAir Pro!</p>
+          <p className="text-muted-foreground max-w-xl mx-auto">Real reviews from real customers. Share your experience with Deva Air Conditioning!</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
