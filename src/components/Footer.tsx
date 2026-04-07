@@ -13,13 +13,13 @@ const footerLinks = {
   ],
   areas: [
     "RS Puram",
-    "Velachery",
-    "Tambaram",
-    "Adyar",
-    "OMR",
-    "Porur",
-    "Koyambedu",
-    "T. Nagar",
+    "Gandhipuram",
+    "Saibaba Colony",
+    "Peelamedu",
+    "Avanashi Road",
+    "Tatabad",
+    "Ramanathapuram",
+    "Saravanampatti",
   ],
 };
 

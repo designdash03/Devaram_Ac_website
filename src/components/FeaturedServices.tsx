@@ -1,15 +1,22 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { ArrowRight, Shield, Clock, Award, Users, CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { ArrowRight, Shield, Clock, Award, Users, CheckCircle, ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX } from "lucide-react";
+
+/* Each media item can be an image (url ending in image ext) or a video (.mp4/.webm) */
+interface MediaItem {
+  type: "image" | "video";
+  src: string;
+  poster?: string; // optional poster image for video
+}
 
 const services = [
   {
-    images: [
-      "/ac-service-1.jpg",
-      "/ac-service-2.jpg",
-      "/ac-service-3.jpg",
-      // Replace with your own photos for AC Repair
+    media: [
+      { type: "image", src: "/ac-service-1.jpg" },
+      { type: "image", src: "/ac-service-2.jpg" },
+      { type: "video", src: "/videos/ac-repair-demo.mp4", poster: "/ac-service-3.jpg" },
+      // Replace with your own photos/videos for AC Repair
     ],
     title: "AC Repair & Fix",
     subtitle: "All brands & models",
@@ -17,11 +24,11 @@ const services = [
     badge: null,
   },
   {
-    images: [
-      "/ac-service-3.jpg",
-      "/ac-service-4.jpg",
-      "/technician-1.jpg",
-      // Replace with your own photos for AC Installation
+    media: [
+      { type: "image", src: "/ac-service-3.jpg" },
+      { type: "video", src: "/videos/ac-installation-demo.mp4", poster: "/ac-service-4.jpg" },
+      { type: "image", src: "/technician-1.jpg" },
+      // Replace with your own photos/videos for AC Installation
     ],
     title: "AC Installation",
     subtitle: "Split, Window & Cassette",
@@ -29,11 +36,11 @@ const services = [
     badge: "Best Seller",
   },
   {
-    images: [
-      "/ac-service-2.jpg",
-      "/ac-service-1.jpg",
-      "/ac-service-4.jpg",
-      // Replace with your own photos for Gas Refill
+    media: [
+      { type: "image", src: "/ac-service-2.jpg" },
+      { type: "image", src: "/ac-service-1.jpg" },
+      { type: "video", src: "/videos/gas-refill-demo.mp4", poster: "/ac-service-4.jpg" },
+      // Replace with your own photos/videos for Gas Refill
     ],
     title: "Gas Refill & Leak Fix",
     subtitle: "R32, R410A, R22",
@@ -41,11 +48,11 @@ const services = [
     badge: null,
   },
   {
-    images: [
-      "/ac-service-4.jpg",
-      "/ac-service-3.jpg",
-      "/ac-service-1.jpg",
-      // Replace with your own photos for Deep Cleaning
+    media: [
+      { type: "video", src: "/videos/ac-cleaning-demo.mp4", poster: "/ac-service-4.jpg" },
+      { type: "image", src: "/ac-service-3.jpg" },
+      { type: "image", src: "/ac-service-1.jpg" },
+      // Replace with your own photos/videos for Deep Cleaning
     ],
     title: "Deep Cleaning & Service",
     subtitle: "Complete AC maintenance",
@@ -54,83 +61,228 @@ const services = [
   },
 ];
 
-/* ────────────── Individual Tile Image Carousel ────────────── */
-function ServiceImageCarousel({
-  images,
+/* ────────────── Media Carousel (Photos + Videos) ────────────── */
+function ServiceMediaCarousel({
+  media,
   title,
 }: {
-  images: string[];
+  media: MediaItem[];
   title: string;
 }) {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [videoProgress, setVideoProgress] = useState(0);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const totalItems = media.length;
+  const currentItem = media[current];
+  const isVideo = currentItem?.type === "video";
 
   const next = useCallback(() => {
-    setCurrent((prev) => (prev + 1) % images.length);
-  }, [images.length]);
+    setCurrent((prev) => (prev + 1) % totalItems);
+    setVideoProgress(0);
+  }, [totalItems]);
 
   const prev = () => {
-    setCurrent((c) => (c - 1 + images.length) % images.length);
+    setCurrent((c) => (c - 1 + totalItems) % totalItems);
+    setVideoProgress(0);
   };
 
-  // Auto-rotate every 3 seconds, pause on hover
+  // Auto-rotate: pause timer when a video is playing (let video run)
   useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(next, 3000);
+    if (isPaused || isVideoPlaying) return;
+    const timer = setInterval(next, isVideo ? 6000 : 3000);
     return () => clearInterval(timer);
-  }, [isPaused, next]);
+  }, [isPaused, isVideoPlaying, isVideo, next]);
+
+  // Handle video events
+  useEffect(() => {
+    const vid = videoRef.current;
+    if (!vid || !isVideo) {
+      setIsVideoPlaying(false);
+      return;
+    }
+
+    const handlePlay = () => setIsVideoPlaying(true);
+    const handlePause = () => setIsVideoPlaying(false);
+    const handleEnded = () => {
+      setIsVideoPlaying(false);
+      next();
+    };
+    const handleTimeUpdate = () => {
+      if (vid.duration) {
+        setVideoProgress((vid.currentTime / vid.duration) * 100);
+      }
+    };
+
+    vid.addEventListener("play", handlePlay);
+    vid.addEventListener("pause", handlePause);
+    vid.addEventListener("ended", handleEnded);
+    vid.addEventListener("timeupdate", handleTimeUpdate);
+
+    return () => {
+      vid.removeEventListener("play", handlePlay);
+      vid.removeEventListener("pause", handlePause);
+      vid.removeEventListener("ended", handleEnded);
+      vid.removeEventListener("timeupdate", handleTimeUpdate);
+    };
+  }, [isVideo, current, next]);
+
+  // Auto-play & mute video when it becomes active
+  useEffect(() => {
+    const vid = videoRef.current;
+    if (!vid || !isVideo) return;
+    vid.muted = isMuted;
+    if (isPaused) {
+      vid.play().catch(() => {});
+    }
+  }, [current, isVideo, isMuted, isPaused]);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const togglePlayPause = () => {
+    const vid = videoRef.current;
+    if (!vid || !isVideo) return;
+    if (vid.paused) {
+      vid.play().catch(() => {});
+    } else {
+      vid.pause();
+    }
+  };
 
   return (
     <div
-      className="relative aspect-[4/3] overflow-hidden bg-slate-100"
+      className="relative aspect-[4/3] overflow-hidden bg-slate-900"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Image Stack with crossfade */}
-      {images.map((img, idx) => (
-        <img
+      {/* Media Stack */}
+      {media.map((item, idx) => (
+        <div
           key={idx}
-          src={img}
-          alt={`${title} - photo ${idx + 1}`}
-          className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${
-            idx === current
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-105"
+          className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+            idx === current ? "opacity-100 z-[1]" : "opacity-0 z-0"
           }`}
-        />
+        >
+          {item.type === "video" ? (
+            <video
+              ref={idx === current ? videoRef : undefined}
+              src={item.src}
+              poster={item.poster}
+              className="w-full h-full object-cover"
+              muted={isMuted}
+              playsInline
+              loop
+              preload="metadata"
+            />
+          ) : (
+            <img
+              src={item.src}
+              alt={`${title} - photo ${idx + 1}`}
+              className="w-full h-full object-cover"
+            />
+          )}
+        </div>
       ))}
 
-      {/* Left / Right Arrows (show on hover) */}
+      {/* Video Controls Overlay */}
+      {isVideo && (
+        <div className="absolute inset-0 z-[8] flex items-center justify-center pointer-events-none">
+          {/* Big Play/Pause Button (center) */}
+          <button
+            onClick={togglePlayPause}
+            className="pointer-events-auto w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow-lg hover:bg-white transition-all hover:scale-110"
+            aria-label={isVideoPlaying ? "Pause video" : "Play video"}
+          >
+            {isVideoPlaying ? (
+              <Pause className="w-5 h-5 text-slate-800" />
+            ) : (
+              <Play className="w-5 h-5 text-slate-800 ml-0.5" />
+            )}
+          </button>
+
+          {/* Mute Button (top-right) */}
+          <button
+            onClick={toggleMute}
+            className="pointer-events-auto absolute top-2 right-2 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+            aria-label={isMuted ? "Unmute" : "Mute"}
+          >
+            {isMuted ? (
+              <VolumeX className="w-3.5 h-3.5" />
+            ) : (
+              <Volume2 className="w-3.5 h-3.5" />
+            )}
+          </button>
+
+          {/* Video Progress Bar */}
+          <div className="absolute bottom-8 left-3 right-3">
+            <div className="w-full h-1 bg-white/30 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-sky-400 rounded-full transition-all duration-300"
+                style={{ width: `${videoProgress}%` }}
+              />
+            </div>
+          </div>
+
+          {/* "VIDEO" badge */}
+          <span className="absolute top-2 left-2 flex items-center gap-1 bg-red-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+            <Play className="w-2.5 h-2.5" />
+            Video
+          </span>
+        </div>
+      )}
+
+      {/* Photo indicator */}
+      {!isVideo && media[current]?.type === "image" && (
+        <span className="absolute top-2 left-2 z-[8] flex items-center gap-1 bg-black/40 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+          Photo
+        </span>
+      )}
+
+      {/* Left / Right Arrows */}
       <button
         onClick={prev}
-        className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-opacity opacity-0 group-hover:opacity-100 z-10"
+        className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-all z-[10]"
         style={{ opacity: isPaused ? 1 : 0 }}
-        aria-label="Previous photo"
+        aria-label="Previous"
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
       <button
         onClick={next}
-        className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-opacity opacity-0 group-hover:opacity-100 z-10"
+        className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-all z-[10]"
         style={{ opacity: isPaused ? 1 : 0 }}
-        aria-label="Next photo"
+        aria-label="Next"
       >
         <ChevronRight className="w-4 h-4" />
       </button>
 
-      {/* Dot Indicators */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
-        {images.map((_, idx) => (
+      {/* Dot Indicators — show different styles for photo vs video */}
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-[10]">
+        {media.map((item, idx) => (
           <button
             key={idx}
-            onClick={() => setCurrent(idx)}
-            className={`rounded-full transition-all duration-300 ${
+            onClick={() => { setCurrent(idx); setVideoProgress(0); }}
+            className={`rounded-full transition-all duration-300 flex items-center justify-center ${
               idx === current
                 ? "w-5 h-2 bg-white"
-                : "w-2 h-2 bg-white/60 hover:bg-white/90"
+                : item.type === "video"
+                  ? "w-2 h-2 bg-white/60 hover:bg-white/90 border border-white/40"
+                  : "w-2 h-2 bg-white/60 hover:bg-white/90"
             }`}
-            aria-label={`Go to photo ${idx + 1}`}
-          />
+            aria-label={`Go to ${item.type} ${idx + 1}`}
+          >
+            {item.type === "video" && idx !== current && (
+              <Play className="w-1.5 h-1.5 text-white/80" />
+            )}
+          </button>
         ))}
       </div>
 
@@ -176,9 +328,9 @@ export default function FeaturedServices() {
               key={index}
               className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden"
             >
-              {/* Auto-rotating Image Carousel */}
-              <ServiceImageCarousel
-                images={service.images}
+              {/* Auto-rotating Media Carousel (Photos + Videos) */}
+              <ServiceMediaCarousel
+                media={service.media}
                 title={service.title}
               />
 
@@ -219,7 +371,7 @@ export default function FeaturedServices() {
             { icon: <Shield className="w-5 h-5" />, text: "Verified Professionals" },
             { icon: <Clock className="w-5 h-5" />, text: "On-Time Guarantee" },
             { icon: <Award className="w-5 h-5" />, text: "Quality Assured" },
-            { icon: <Users className="w-5 h-5" />, text: "5,000+ Happy Customers" },
+            { icon: <Users className="w-5 h-5" />, text: "1,000+ Happy Customers" },
           ].map((item, i) => (
             <div key={i} className="flex items-center gap-3 bg-slate-50 rounded-xl px-4 py-3">
               <div className="text-sky-600 shrink-0">{item.icon}</div>
