@@ -3,19 +3,17 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ArrowRight, Shield, Clock, Award, Users, CheckCircle, ChevronLeft, ChevronRight, Play, Pause, Volume2, VolumeX } from "lucide-react";
 
-/* Each media item can be an image or a video */
 interface MediaItem {
   type: "image" | "video";
   src: string;
-  poster?: string;
 }
 
 const services = [
   {
     media: [
-      { type: "video", src: "/videos/ac-repair-1.mp4" },
-      { type: "video", src: "/videos/ac-repair-2.mp4" },
-      { type: "video", src: "/videos/ac-repair-3.mp4" },
+      { type: "video" as const, src: "/videos/ac-repair-1.mp4" },
+      { type: "video" as const, src: "/videos/ac-repair-2.mp4" },
+      { type: "video" as const, src: "/videos/ac-repair-3.mp4" },
     ],
     title: "AC Repair & Fix",
     subtitle: "All brands & models",
@@ -24,9 +22,9 @@ const services = [
   },
   {
     media: [
-      { type: "video", src: "/videos/ac-install-1.mp4" },
-      { type: "video", src: "/videos/ac-install-2.mp4" },
-      { type: "video", src: "/videos/ac-install-3.mp4" },
+      { type: "video" as const, src: "/videos/ac-install-1.mp4" },
+      { type: "video" as const, src: "/videos/ac-install-2.mp4" },
+      { type: "video" as const, src: "/videos/ac-install-3.mp4" },
     ],
     title: "AC Installation",
     subtitle: "Split, Window & Cassette",
@@ -35,9 +33,9 @@ const services = [
   },
   {
     media: [
-      { type: "video", src: "/videos/gas-refill-1.mp4" },
-      { type: "image", src: "/gas-refill-2.jpeg" },
-      { type: "image", src: "/gas-refill-3.jpeg" },
+      { type: "video" as const, src: "/videos/gas-refill-1.mp4" },
+      { type: "image" as const, src: "/gas-refill-2.jpeg" },
+      { type: "image" as const, src: "/gas-refill-3.jpeg" },
     ],
     title: "Gas Refill & Leak Fix",
     subtitle: "R32, R410A, R22",
@@ -46,9 +44,9 @@ const services = [
   },
   {
     media: [
-      { type: "video", src: "/videos/ac-clean-1.mp4" },
-      { type: "video", src: "/videos/ac-clean-2.mp4" },
-      { type: "video", src: "/videos/ac-clean-3.mp4" },
+      { type: "video" as const, src: "/videos/ac-clean-1.mp4" },
+      { type: "video" as const, src: "/videos/ac-clean-2.mp4" },
+      { type: "video" as const, src: "/videos/ac-clean-3.mp4" },
     ],
     title: "Deep Cleaning & Service",
     subtitle: "Complete AC maintenance",
@@ -58,260 +56,252 @@ const services = [
 ];
 
 /* ────────────── Media Carousel ────────────── */
-function ServiceMediaCarousel({
-  media,
-  title,
-}: {
-  media: MediaItem[];
-  title: string;
-}) {
+function ServiceMediaCarousel({ media, title }: { media: MediaItem[]; title: string }) {
   const [current, setCurrent] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
-  const [videoProgress, setVideoProgress] = useState(0);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const totalItems = media.length;
-  const currentItem = media[current];
-  const isVideo = currentItem?.type === "video";
+  const total = media.length;
+  const item = media[current];
+  const isVideo = item?.type === "video";
 
   const goNext = useCallback(() => {
-    setCurrent((prev) => (prev + 1) % totalItems);
-    setVideoProgress(0);
-    setIsVideoPlaying(false);
-  }, [totalItems]);
+    stopCurrentVideo();
+    setCurrent((p) => (p + 1) % total);
+    setProgress(0);
+    setIsLoaded(false);
+  }, [total]);
 
   const goPrev = () => {
-    setCurrent((c) => (c - 1 + totalItems) % totalItems);
-    setVideoProgress(0);
-    setIsVideoPlaying(false);
+    stopCurrentVideo();
+    setCurrent((c) => (c - 1 + total) % total);
+    setProgress(0);
+    setIsLoaded(false);
   };
 
   const goTo = (idx: number) => {
+    stopCurrentVideo();
     setCurrent(idx);
-    setVideoProgress(0);
-    setIsVideoPlaying(false);
+    setProgress(0);
+    setIsLoaded(false);
   };
 
-  // Auto-rotate when NOT hovering
-  useEffect(() => {
-    if (isHovering || isVideoPlaying) return;
-    const timer = setInterval(goNext, isVideo ? 5000 : 3000);
-    return () => clearInterval(timer);
-  }, [isHovering, isVideoPlaying, isVideo, goNext]);
-
-  // When switching to a video, reset it
-  useEffect(() => {
+  const stopCurrentVideo = () => {
     const vid = videoRef.current;
-    if (!vid || !isVideo) {
-      setIsVideoPlaying(false);
-      return;
+    if (vid) {
+      vid.pause();
+      vid.currentTime = 0;
     }
-    // Reset video to start
-    vid.currentTime = 0;
-    vid.pause();
-    setIsVideoPlaying(false);
-  }, [current, isVideo]);
+    setIsPlaying(false);
+  };
 
-  // Listen to video events
+  // Auto-rotate
+  useEffect(() => {
+    if (isHovering || isPlaying) return;
+    const timer = setInterval(goNext, 5000);
+    return () => clearInterval(timer);
+  }, [isHovering, isPlaying, goNext]);
+
+  // When current changes, reset video
   useEffect(() => {
     const vid = videoRef.current;
-    if (!vid || !isVideo) return;
+    if (vid) {
+      vid.pause();
+      vid.currentTime = 0;
+      vid.muted = true;
+      setIsPlaying(false);
+      setProgress(0);
+    }
+  }, [current]);
 
-    const onPlay = () => setIsVideoPlaying(true);
-    const onPause = () => setIsVideoPlaying(false);
-    const onEnded = () => {
-      setIsVideoPlaying(false);
-      goNext();
-    };
-    const onTimeUpdate = () => {
-      if (vid.duration) {
-        setVideoProgress((vid.currentTime / vid.duration) * 100);
-      }
-    };
-
-    vid.addEventListener("play", onPlay);
-    vid.addEventListener("pause", onPause);
-    vid.addEventListener("ended", onEnded);
-    vid.addEventListener("timeupdate", onTimeUpdate);
-
-    return () => {
-      vid.removeEventListener("play", onPlay);
-      vid.removeEventListener("pause", onPause);
-      vid.removeEventListener("ended", onEnded);
-      vid.removeEventListener("timeupdate", onTimeUpdate);
-    };
-  }, [isVideo, current, goNext]);
-
-  // Play button — plays with audio or muted
-  const togglePlayPause = () => {
+  const handlePlay = () => {
     const vid = videoRef.current;
     if (!vid || !isVideo) return;
     if (vid.paused) {
       vid.muted = isMuted;
-      vid.play().catch(() => {});
+      vid.play().then(() => setIsPlaying(true)).catch(() => {});
     } else {
       vid.pause();
+      setIsPlaying(false);
     }
   };
 
-  // Mute / Unmute
-  const toggleMute = () => {
+  const handleMute = () => {
     const vid = videoRef.current;
-    if (!vid || !isVideo) return;
+    if (!vid) return;
     const newMuted = !isMuted;
     vid.muted = newMuted;
     setIsMuted(newMuted);
-    // If video was playing, it continues with new mute state
-    // If video was paused, play it with audio
-    if (vid.paused) {
-      vid.play().catch(() => {});
+    // If video is paused, auto-play with sound
+    if (vid.paused && newMuted === false) {
+      vid.play().then(() => setIsPlaying(true)).catch(() => {});
     }
+  };
+
+  const handleVideoEnd = () => {
+    setIsPlaying(false);
+    goNext();
+  };
+
+  const handleTimeUpdate = () => {
+    const vid = videoRef.current;
+    if (vid && vid.duration) {
+      setProgress((vid.currentTime / vid.duration) * 100);
+    }
+  };
+
+  const handleLoadedData = () => {
+    setIsLoaded(true);
   };
 
   return (
     <div
-      className="relative aspect-[4/3] overflow-hidden bg-slate-900"
+      ref={containerRef}
+      className="relative w-full aspect-[9/16] sm:aspect-[4/3] overflow-hidden bg-slate-900 rounded-t-2xl"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      {/* Media Stack */}
-      {media.map((item, idx) => (
-        <div
-          key={idx}
-          className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-            idx === current ? "opacity-100 z-[1]" : "opacity-0 z-0"
-          }`}
-        >
-          {item.type === "video" ? (
-            <video
-              ref={idx === current ? videoRef : undefined}
-              src={item.src}
-              poster={item.poster}
-              className="w-full h-full object-cover"
-              muted={isMuted}
-              playsInline
-              loop
-              preload="metadata"
-            />
-          ) : (
-            <img
-              src={item.src}
-              alt={`${title} - photo ${idx + 1}`}
-              className="w-full h-full object-cover"
-            />
-          )}
+      {/* Current Media - render ONLY the active one */}
+      <div className="absolute inset-0 z-[1]">
+        {isVideo ? (
+          <video
+            ref={videoRef}
+            src={item.src}
+            className="w-full h-full object-cover"
+            playsInline
+            loop
+            preload="auto"
+            muted={isMuted}
+            onEnded={handleVideoEnd}
+            onTimeUpdate={handleTimeUpdate}
+            onLoadedData={handleLoadedData}
+            onCanPlay={() => setIsLoaded(true)}
+          />
+        ) : (
+          <img
+            src={item.src}
+            alt={`${title} - photo ${current + 1}`}
+            className="w-full h-full object-cover"
+            onLoad={() => setIsLoaded(true)}
+          />
+        )}
+      </div>
+
+      {/* Loading spinner */}
+      {!isLoaded && (
+        <div className="absolute inset-0 z-[5] flex items-center justify-center bg-slate-900">
+          <div className="w-8 h-8 border-3 border-white/30 border-t-sky-400 rounded-full animate-spin" />
         </div>
-      ))}
+      )}
 
-      {/* Video Controls */}
-      {isVideo && (
-        <>
-          {/* Dark overlay when paused (not playing) */}
-          {!isVideoPlaying && (
-            <div className="absolute inset-0 bg-black/20 z-[6]" />
+      {/* Video Controls - only show for videos */}
+      {isVideo && isLoaded && (
+        <div className="absolute inset-0 z-[8]">
+          {/* Overlay when paused */}
+          {!isPlaying && (
+            <div className="absolute inset-0 bg-black/25" />
           )}
 
-          <div className="absolute inset-0 z-[8] flex items-center justify-center pointer-events-none">
-            {/* Play/Pause Button (center) */}
+          {/* Play/Pause - center */}
+          <div className="absolute inset-0 flex items-center justify-center">
             <button
-              onClick={togglePlayPause}
-              className="pointer-events-auto w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg hover:bg-white transition-all hover:scale-110"
-              aria-label={isVideoPlaying ? "Pause video" : "Play video"}
+              onClick={handlePlay}
+              className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all"
+              type="button"
             >
-              {isVideoPlaying ? (
+              {isPlaying ? (
                 <Pause className="w-6 h-6 text-slate-800" />
               ) : (
                 <Play className="w-7 h-7 text-slate-800 ml-1" />
               )}
             </button>
-
-            {/* Mute Button (top-right) */}
-            <button
-              onClick={toggleMute}
-              className="pointer-events-auto absolute top-2 right-2 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-              aria-label={isMuted ? "Unmute" : "Mute"}
-            >
-              {isMuted ? (
-                <VolumeX className="w-4 h-4" />
-              ) : (
-                <Volume2 className="w-4 h-4" />
-              )}
-            </button>
-
-            {/* Video Progress Bar */}
-            <div className="absolute bottom-8 left-3 right-3">
-              <div className="w-full h-1.5 bg-white/30 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-sky-400 rounded-full transition-all duration-300"
-                  style={{ width: `${videoProgress}%` }}
-                />
-              </div>
-            </div>
-
-            {/* "VIDEO" badge */}
-            <span className="absolute top-2 left-2 flex items-center gap-1 bg-red-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
-              <Play className="w-2.5 h-2.5" />
-              Video
-            </span>
           </div>
-        </>
+
+          {/* Mute button - top right */}
+          <button
+            onClick={handleMute}
+            className="absolute top-2 right-2 w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+            type="button"
+          >
+            {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+          </button>
+
+          {/* Progress bar */}
+          <div className="absolute bottom-0 left-0 right-0">
+            <div className="w-full h-1 bg-white/30">
+              <div
+                className="h-full bg-sky-400 transition-all duration-200"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
+
+          {/* VIDEO badge */}
+          <span className="absolute top-2 left-2 flex items-center gap-1 bg-red-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
+            <Play className="w-2.5 h-2.5" />
+            Video
+          </span>
+        </div>
       )}
 
-      {/* Photo indicator */}
-      {!isVideo && media[current]?.type === "image" && (
+      {/* Photo badge */}
+      {!isVideo && isLoaded && (
         <span className="absolute top-2 left-2 z-[8] flex items-center gap-1 bg-black/40 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider">
           Photo
         </span>
       )}
 
-      {/* Left / Right Arrows */}
-      <button
-        onClick={goPrev}
-        className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-all z-[10] opacity-0 hover:opacity-100"
-        style={{ opacity: isHovering ? 1 : 0 }}
-        aria-label="Previous"
-      >
-        <ChevronLeft className="w-4 h-4" />
-      </button>
-      <button
-        onClick={goNext}
-        className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-all z-[10] opacity-0 hover:opacity-100"
-        style={{ opacity: isHovering ? 1 : 0 }}
-        aria-label="Next"
-      >
-        <ChevronRight className="w-4 h-4" />
-      </button>
+      {/* Navigation arrows */}
+      {isHovering && (
+        <>
+          <button
+            onClick={goPrev}
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-[10] w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-all"
+            type="button"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={goNext}
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-[10] w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center text-slate-700 shadow hover:bg-white transition-all"
+            type="button"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </>
+      )}
 
-      {/* Dot Indicators */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-[10]">
-        {media.map((item, idx) => (
+      {/* Dot indicators */}
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-[10]">
+        {media.map((m, idx) => (
           <button
             key={idx}
             onClick={() => goTo(idx)}
             className={`rounded-full transition-all duration-300 flex items-center justify-center ${
               idx === current
                 ? "w-5 h-2 bg-white"
-                : item.type === "video"
+                : m.type === "video"
                   ? "w-2 h-2 bg-white/60 hover:bg-white/90 border border-white/40"
                   : "w-2 h-2 bg-white/60 hover:bg-white/90"
             }`}
-            aria-label={`Go to ${item.type} ${idx + 1}`}
+            type="button"
           >
-            {item.type === "video" && idx !== current && (
+            {m.type === "video" && idx !== current && (
               <Play className="w-1.5 h-1.5 text-white/80" />
             )}
           </button>
         ))}
       </div>
 
-      {/* Bottom gradient + title overlay */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/50 via-black/20 to-transparent pointer-events-none z-[5]" />
-      <div className="absolute bottom-3 left-3 right-3 z-[5] pointer-events-none">
-        <h3 className="text-white font-bold text-base drop-shadow-md">
-          {title}
-        </h3>
+      {/* Bottom gradient + title */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/50 to-transparent pointer-events-none z-[5]" />
+      <div className="absolute bottom-3 left-3 z-[5] pointer-events-none">
+        <h3 className="text-white font-bold text-sm drop-shadow-md">{title}</h3>
       </div>
     </div>
   );
@@ -322,7 +312,6 @@ export default function FeaturedServices() {
   return (
     <section id="services" className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <div className="flex items-end justify-between mb-10">
           <div>
             <span className="inline-block text-sm font-semibold text-sky-600 bg-sky-50 px-4 py-1.5 rounded-full mb-4">
@@ -341,17 +330,13 @@ export default function FeaturedServices() {
           </a>
         </div>
 
-        {/* Service Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {services.map((service, index) => (
             <div
               key={index}
               className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden"
             >
-              <ServiceMediaCarousel
-                media={service.media}
-                title={service.title}
-              />
+              <ServiceMediaCarousel media={service.media} title={service.title} />
 
               {service.badge && (
                 <div className="relative -mt-1 z-10 ml-3">
@@ -382,7 +367,6 @@ export default function FeaturedServices() {
           ))}
         </div>
 
-        {/* Trust Indicators Row */}
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { icon: <Shield className="w-5 h-5" />, text: "Verified Professionals" },
