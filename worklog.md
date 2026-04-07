@@ -93,3 +93,24 @@ Stage Summary:
 - Hero section updated as requested
 - Code zip (115KB) created with all components including latest changes
 - User needs to manually add 12 media files (10 videos + 2 images) to public/videos/ and public/
+
+---
+Task ID: 2
+Agent: Main
+Task: Fix 404 errors - update file names to match user's original names + fix reviews API 500
+
+Work Log:
+- Read FeaturedServices.tsx and found renamed file names (ac-repair-1.mp4 etc.)
+- Updated all 12 media file paths to match user's original file names from 404 errors
+- AC Repair: Ac-Service-Video-1/2.mp4, Ac-Service_video-3.mp4 (underscore)
+- AC Installation: Ac-Installation-video-1.mp4, Ac-Installation-video.mp4 (no number), Ac-Installation-video-3.mp4
+- Gas Refill: Ac-Gas-filling-image-1/2.jpeg, Ac-Gas-filling-video-1.mp4
+- Deep Cleaning: Ac-Cleaning-video-1/2/3.mp4
+- All files now use / prefix (public/ root) instead of /videos/ subfolder
+- Rewrote /api/reviews/route.ts with fallback sample data when DB not available
+- Created new zip at /home/z/my-project/download/deva-ac-website-code.zip (231KB)
+
+Stage Summary:
+- File names now match user's original uploaded files exactly
+- Reviews API returns 6 sample reviews when database not set up (no more 500 error)
+- User just needs to copy their 12 files to public/ folder (no renaming needed)

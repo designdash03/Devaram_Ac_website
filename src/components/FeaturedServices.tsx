@@ -11,9 +11,9 @@ interface MediaItem {
 const services = [
   {
     media: [
-      { type: "video", src: "/videos/ac-repair-1.mp4" },
-      { type: "video", src: "/videos/ac-repair-2.mp4" },
-      { type: "video", src: "/videos/ac-repair-3.mp4" },
+      { type: "video", src: "/Ac-Service-Video-1.mp4" },
+      { type: "video", src: "/Ac-Service-Video-2.mp4" },
+      { type: "video", src: "/Ac-Service_video-3.mp4" },
     ],
     title: "AC Repair & Fix",
     subtitle: "All brands & models",
@@ -22,9 +22,9 @@ const services = [
   },
   {
     media: [
-      { type: "video", src: "/videos/ac-install-1.mp4" },
-      { type: "video", src: "/videos/ac-install-2.mp4" },
-      { type: "video", src: "/videos/ac-install-3.mp4" },
+      { type: "video", src: "/Ac-Installation-video-1.mp4" },
+      { type: "video", src: "/Ac-Installation-video.mp4" },
+      { type: "video", src: "/Ac-Installation-video-3.mp4" },
     ],
     title: "AC Installation",
     subtitle: "Split, Window & Cassette",
@@ -33,9 +33,9 @@ const services = [
   },
   {
     media: [
-      { type: "video", src: "/videos/gas-refill-1.mp4" },
-      { type: "image", src: "/gas-refill-2.jpeg" },
-      { type: "image", src: "/gas-refill-3.jpeg" },
+      { type: "image", src: "/Ac-Gas-filling-image-1.jpeg" },
+      { type: "image", src: "/Ac-Gas-filling-image-2.jpeg" },
+      { type: "video", src: "/Ac-Gas-filling-video-1.mp4" },
     ],
     title: "Gas Refill & Leak Fix",
     subtitle: "R32, R410A, R22",
@@ -44,9 +44,9 @@ const services = [
   },
   {
     media: [
-      { type: "video", src: "/videos/ac-clean-1.mp4" },
-      { type: "video", src: "/videos/ac-clean-2.mp4" },
-      { type: "video", src: "/videos/ac-clean-3.mp4" },
+      { type: "video", src: "/Ac-Cleaning-video-1.mp4" },
+      { type: "video", src: "/Ac-Cleaning-video-2.mp4" },
+      { type: "video", src: "/Ac-Cleaning-video-3.mp4" },
     ],
     title: "Deep Cleaning & Service",
     subtitle: "Complete AC maintenance",
