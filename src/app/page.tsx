@@ -10,7 +10,7 @@ import Testimonials from "@/components/Testimonials";
 import DownloadBanner from "@/components/DownloadBanner";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import FloatingButtons from "@/components/FloatingButtons";
+
 import OfferBanner from "@/components/OfferBanner";
 
 export default function Home() {
@@ -30,7 +30,6 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
-      <FloatingButtons />
     </div>
   );
 }
