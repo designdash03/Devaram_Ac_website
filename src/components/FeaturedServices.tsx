@@ -17,7 +17,7 @@ const placeholderColors = [
 
 const placeholderIcons = [<Snowflake key="s" />, <Wrench key="w" />, <Wind key="d" />, <Droplets key="dp" />];
 
-const services = [
+const services: { media: MediaItem[]; title: string; subtitle: string; features: string[]; badge: string | null }[] = [
   {
     media: [
       { type: "video", src: "/Images/Ac-Service-Video-1.mp4" },
