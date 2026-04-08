@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CategoryBar from "@/components/CategoryBar";
-import About from "@/components/About";
 import FeaturedServices from "@/components/FeaturedServices";
 import HowItWorks from "@/components/HowItWorks";
 import StatsCounter from "@/components/StatsCounter";
