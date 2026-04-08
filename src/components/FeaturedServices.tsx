@@ -22,7 +22,7 @@ const services: { media: MediaItem[]; title: string; subtitle: string; features:
     media: [
       { type: "video", src: "/Images/Ac-Service-Video-1.mp4" },
       { type: "video", src: "/Images/Ac-Service-Video-2.mp4" },
-      { type: "video", src: "/Images/Ac-Service_video-3.mp4" },
+      { type: "video", src: "/Images/Ac-Service-video-3.mp4" },
     ],
     title: "AC Repair & Fix",
     subtitle: "All brands & models",
@@ -32,7 +32,7 @@ const services: { media: MediaItem[]; title: string; subtitle: string; features:
   {
     media: [
       { type: "video", src: "/Images/Ac-Installation-video-1.mp4" },
-      { type: "video", src: "/Images/Ac-Installation-video.mp4" },
+      { type: "video", src: "/Images/Ac-Installation-video-2.mp4" },
       { type: "video", src: "/Images/Ac-Installation-video-3.mp4" },
     ],
     title: "AC Installation",
