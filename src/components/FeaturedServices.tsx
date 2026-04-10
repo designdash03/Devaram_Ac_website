@@ -544,7 +544,6 @@ export default function FeaturedServices() {
 
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { icon: <Shield className="w-5 h-5" />, text: "Verified Professionals" },
             { icon: <Clock className="w-5 h-5" />, text: "On-Time Guarantee" },
             { icon: <Award className="w-5 h-5" />, text: "Quality Assured" },
             { icon: <Users className="w-5 h-5" />, text: "1,000+ Happy Customers" },

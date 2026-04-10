@@ -105,7 +105,7 @@ export default function WhyUs() {
         {/* Bottom Trust Badges */}
         <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
           {[
-            { icon: <ShieldCheck className="w-6 h-6" />, text: "90-Day Warranty" },
+            { icon: <ShieldCheck className="w-6 h-6" />, text: "Warranty Available" },
             { icon: <Clock className="w-6 h-6" />, text: "Same-Day Service" },
             { icon: <Award className="w-6 h-6" />, text: "5+ Years Experience" },
             { icon: <Users className="w-6 h-6" />, text: "1,000+ Customers" },
