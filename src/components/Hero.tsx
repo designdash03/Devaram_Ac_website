@@ -113,7 +113,7 @@ export default function Hero() {
             </div>
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-sky-300" />
-              <span>90-Day Warranty</span>
+              <span>Warranty Available</span>
             </div>
             <div className="flex items-center gap-2">
               <Star className="w-4 h-4 text-sky-300" />

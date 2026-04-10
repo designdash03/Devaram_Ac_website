@@ -20,9 +20,9 @@ const contactInfo = [
   {
     icon: <Phone className="w-6 h-6" />,
     title: "Call Us",
-    primary: "+91 72009 79643",
-    secondary: "+91 72009 79643",
-    action: "tel:+917200979643",
+    primary: "+91 80722 13475",
+    secondary: "+91 80722 13475",
+    action: "tel:+918072213475",
     actionText: "Call Now",
     color: "bg-sky-50",
     textColor: "text-sky-600",
@@ -30,7 +30,7 @@ const contactInfo = [
   {
     icon: <MessageCircle className="w-6 h-6" />,
     title: "WhatsApp",
-    primary: "+91 72009 79643",
+    primary: "+91 80722 13475",
     secondary: "Quick response guaranteed",
     action:
       "https://wa.me/917200979643?text=Hi%2C%20I%20need%20AC%20service%20at%20my%20place.%20Please%20share%20details.",
@@ -63,7 +63,7 @@ const contactInfo = [
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const name = (form.elements.namedItem("name") as HTMLInputElement).value;
@@ -85,7 +85,7 @@ export default function Contact() {
     const serviceLabel = serviceLabels[service] || service;
     const whatsappMessage = `🔵 *New AC Service Inquiry*\n\n👤 *Name:* ${name}\n📞 *Phone:* ${phone}${email ? `\n📧 *Email:* ${email}` : ""}\n🔧 *Service:* ${serviceLabel}${message ? `\n💬 *Message:* ${message}` : ""}`;
 
-    const whatsappUrl = `https://wa.me/917200979643?text=${encodeURIComponent(whatsappMessage)}`;
+    const whatsappUrl = `https://wa.me/918072213475?text=${encodeURIComponent(whatsappMessage)}`;
     const subject = encodeURIComponent(`New AC Service Inquiry - ${serviceLabel} from ${name}`);
     const body = encodeURIComponent(`Name: ${name}\nPhone: ${phone}\n${email ? `Email: ${email}\n` : ""}Service: ${serviceLabel}\n${message ? `Message: ${message}` : ""}`);
     const mailtoUrl = `mailto:devaramramasamy93@gmail.com?subject=${subject}&body=${body}`;
@@ -237,7 +237,7 @@ export default function Contact() {
                         <option value="installation">AC Installation</option>
                         <option value="gas-refill">Gas Refill</option>
                         <option value="maintenance">Regular Maintenance</option>
-                        <option value="amc">AMC Plan</option>
+                        
                         <option value="emergency">Emergency Service</option>
                         <option value="other">Other</option>
                       </select>

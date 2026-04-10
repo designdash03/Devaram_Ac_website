@@ -3,13 +3,7 @@
 import { Snowflake, Wrench, Droplets, Settings, ShieldCheck, Zap, Clock, Award, Users, ThumbsUp, CheckCircle, Phone, MessageCircle } from "lucide-react";
 
 const comparisons = [
-  {
-    feature: "Technician Verification",
-    us: true,
-    usText: "Background-verified & certified",
-    them: false,
-    themText: "No guarantee",
-  },
+  
   {
     feature: "Pricing Transparency",
     us: true,
@@ -20,7 +14,7 @@ const comparisons = [
   {
     feature: "Service Warranty",
     us: true,
-    usText: "90-day warranty on all repairs",
+    usText: "Warranty Available",
     them: false,
     themText: "No warranty provided",
   },

@@ -36,9 +36,9 @@ const services: { media: MediaItem[]; title: string; subtitle: string; features:
       { type: "video", src: "/Images/Ac-Installation-video-3.mp4" },
     ],
     title: "AC Installation",
-    subtitle: "Split, Window & Cassette",
+    subtitle: "Split, Window ",
     features: ["Professional setup", "Copper piping", "Drainage system", "Wall mounting"],
-    badge: "Best Seller",
+    badge: null,
   },
   {
     media: [
@@ -60,7 +60,7 @@ const services: { media: MediaItem[]; title: string; subtitle: string; features:
     title: "Deep Cleaning & Service",
     subtitle: "Complete AC maintenance",
     features: ["Filter cleaning", "Coil washing", "Drain cleaning", "Performance check"],
-    badge: "Popular",
+    badge: null,
   },
 ];
 

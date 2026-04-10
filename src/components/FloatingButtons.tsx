@@ -35,7 +35,7 @@ export default function FloatingButtons() {
 
       {/* Call Button */}
       <a
-        href="tel:+917200979643"
+        href="tel:+918072213475"
         className="group relative"
       >
         <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-20" />

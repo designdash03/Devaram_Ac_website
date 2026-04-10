@@ -33,7 +33,7 @@ export default function OfferBanner() {
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <a
-              href="tel:+917200979643"
+              href="tel:+918072213475"
               className="hidden sm:inline-flex items-center gap-1 bg-white text-orange-600 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-orange-50 transition-colors"
             >
               <Phone className="w-3 h-3" />

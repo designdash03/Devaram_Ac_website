@@ -8,18 +8,10 @@ const footerLinks = {
     "AC Installation",
     "Gas Refill",
     "Regular Maintenance",
-    "AMC Plans",
     "Emergency Service",
   ],
   areas: [
-    "RS Puram",
-    "Gandhipuram",
-    "Saibaba Colony",
-    "Peelamedu",
-    "Avanashi Road",
-    "Tatabad",
-    "Ramanathapuram",
-    "Saravanampatti",
+    "All Over Coimbatore",
   ],
 };
 
@@ -54,7 +46,7 @@ export default function Footer() {
                 className="flex items-center gap-2 text-sm text-slate-300 hover:text-sky-400 transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                +91 72009 79643
+                +91 80722 13475
               </a>
               <a
                 href="mailto:devaramramasamy93@gmail.com"
@@ -119,14 +111,14 @@ export default function Footer() {
             </p>
             <div className="space-y-3">
               <a
-                href="tel:+917200979643"
+                href="tel:+918072213475"
                 className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors w-full justify-center"
               >
                 <Phone className="w-4 h-4" />
                 Call Now
               </a>
               <a
-                href="https://wa.me/917200979643"
+                href="https://wa.me/918072213475"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors w-full justify-center"
