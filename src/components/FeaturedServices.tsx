@@ -43,7 +43,7 @@ const services: { media: MediaItem[]; title: string; subtitle: string; features:
   {
     media: [
       { type: "image", src: "/Images/Ac-Gas-filling-image-1.jpeg" },
-      { type: "image", src: "/Images/Ac-Gas-filling-image-2.jpeg" },
+      { type: "image", src: "/Images/Ac-Gas-filling-video-2.jpeg" },
       { type: "video", src: "/Images/Ac-Gas-filling-video-1.mp4" },
     ],
     title: "Gas Refill & Leak Fix",
