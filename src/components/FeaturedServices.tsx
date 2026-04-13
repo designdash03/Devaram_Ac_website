@@ -55,7 +55,7 @@ const services: { media: MediaItem[]; title: string; subtitle: string; features:
     media: [
       { type: "video", src: "/Images/Ac-Cleaning-video-1.mp4" },
       { type: "video", src: "/Images/Ac-Cleaning-video-2.mp4" },
-      { type: "image", src: "/Images/Ac-Cleaning-image-1.mp4" },
+      { type: "image", src: "/Images/Ac-Cleaning-image-1.jpeg" },
     ],
     title: "Deep Cleaning & Service",
     subtitle: "Complete AC maintenance",
