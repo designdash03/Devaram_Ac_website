@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://devaram-ac-website.vercel.app',
+      url: 'https://www.devaairconditioningcoimbatore.in',
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 1,

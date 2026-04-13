@@ -14,13 +14,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://devaaairconditioning.com"),
+  // Updated to match your actual custom domain
+  metadataBase: new URL("https://www.devaairconditioningcoimbatore.in"),
   title: "Deva Air Conditioning - Professional AC Repair, Installation & Service | Fast & Reliable",
   description:
-    "Expert AC repair, installation, gas refill, and maintenance services. 15+ years of trusted experience. Same-day service available. Call now for a free estimate!",
+    "Expert AC repair, installation, gas refill, and maintenance services in Coimbatore. 15+ years of trusted experience. Same-day service available. Call now for a free estimate!",
   keywords: [
     "AC repair near me",
-    "air conditioning repair",
+    "air conditioning repair Coimbatore",
     "AC installation",
     "AC gas refill",
     "AC maintenance service",
@@ -33,6 +34,9 @@ export const metadata: Metadata = {
     "AC annual maintenance",
     "emergency AC repair",
   ],
+  alternates: {
+    canonical: "https://www.devaairconditioningcoimbatore.in",
+  },
   authors: [{ name: "Deva Air Conditioning" }],
   icons: {
     icon: "/logo.png",
@@ -41,6 +45,7 @@ export const metadata: Metadata = {
     title: "Deva Air Conditioning - Professional AC Repair & Installation Services",
     description:
       "Expert AC repair, installation, gas refill, and maintenance services. 15+ years of trusted experience. Same-day service available!",
+    url: "https://www.devaairconditioningcoimbatore.in",
     type: "website",
     locale: "en_US",
     siteName: "Deva Air Conditioning",
@@ -80,6 +85,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Schema.org HVACBusiness JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -89,7 +95,7 @@ export default function RootLayout({
               name: "Deva Air Conditioning",
               description:
                 "Professional AC repair, installation, and maintenance services",
-              url: "https://devaaairconditioning.com",
+              url: "https://www.devaairconditioningcoimbatore.in",
               telephone: "+91-72009-79643",
               email: "devaramramasamy93@gmail.com",
               address: {
@@ -102,8 +108,8 @@ export default function RootLayout({
               },
               geo: {
                 "@type": "GeoCoordinates",
-                latitude: "13.0827",
-                longitude: "80.2707",
+                latitude: "11.0168", // Corrected for Coimbatore
+                longitude: "76.9558", // Corrected for Coimbatore
               },
               openingHoursSpecification: [
                 {
@@ -126,7 +132,7 @@ export default function RootLayout({
                   closes: "18:00",
                 },
               ],
-              priceRange: "$$",
+              priceRange: "₹₹",
               aggregateRating: {
                 "@type": "AggregateRating",
                 ratingValue: "4.8",
@@ -154,6 +160,7 @@ export default function RootLayout({
             }),
           }}
         />
+        {/* Schema.org FAQPage JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -197,7 +204,6 @@ export default function RootLayout({
             }),
           }}
         />
-        <link rel="canonical" href="https://devaaairconditioning.com" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
