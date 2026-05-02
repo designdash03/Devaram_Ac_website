@@ -11,16 +11,16 @@ import {
   Wind,
 } from "lucide-react";
 
-const categories = [
-  { icon: <Wrench className="w-6 h-6" />, label: "AC Repair", active: true },
-  { icon: <Snowflake className="w-6 h-6" />, label: "AC Installation" },
-  { icon: <Droplets className="w-6 h-6" />, label: "Gas Refill" },
-  { icon: <Settings className="w-6 h-6" />, label: "Servicing" },
-  // { icon: <ShieldCheck className="w-6 h-6" />, label: "AMC Plans" },
-  { icon: <Zap className="w-6 h-6" />, label: "Emergency" },
-  { icon: <Thermometer className="w-6 h-6" />, label: "Thermostat" },
-  { icon: <Wind className="w-6 h-6" />, label: "Deep Clean" },
-];
+// const categories = [
+//   { icon: <Wrench className="w-6 h-6" />, label: "AC Repair", active: true },
+//   { icon: <Snowflake className="w-6 h-6" />, label: "AC Installation" },
+//   { icon: <Droplets className="w-6 h-6" />, label: "Gas Refill" },
+//   { icon: <Settings className="w-6 h-6" />, label: "Servicing" },
+//   // { icon: <ShieldCheck className="w-6 h-6" />, label: "AMC Plans" },
+//   { icon: <Zap className="w-6 h-6" />, label: "Emergency" },
+//   { icon: <Thermometer className="w-6 h-6" />, label: "Thermostat" },
+//   { icon: <Wind className="w-6 h-6" />, label: "Deep Clean" },
+// ];
 
 export default function CategoryBar() {
   return (

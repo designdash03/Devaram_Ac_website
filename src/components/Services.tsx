@@ -236,7 +236,7 @@ export default function Services() {
               </div>
             </div>
             <a
-              href="tel:+918072213475"
+              href="tel:+917200979643"
               className="inline-flex items-center justify-center gap-2 bg-white text-sky-700 px-8 py-4 rounded-full font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 shrink-0"
             >
               <Phone className="w-5 h-5" />
