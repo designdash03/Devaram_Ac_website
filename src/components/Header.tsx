@@ -19,7 +19,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > window.innerHeight - 100;;
+      const isScrolled = window.scrollY > window.innerHeight * 0.8;;
       setScrolled(isScrolled);
     };
     window.addEventListener("scroll", handleScroll);
